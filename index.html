@@ -1,54 +1,211 @@
-<!doctype html>
-<html lang="id">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>ZILLA Foundation</title>
-  <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZILA TOKEN — Dark AI</title>
+
+<style>
+/* ==== GLOBAL THEME ==== */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background: #050505;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1;
+}
+
+/* ==== NAVBAR ==== */
+nav {
+  width: 100%;
+  background: #0c0c0c;
+  padding: 15px 0;
+  text-align: center;
+  border-bottom: 1px solid #222;
+}
+
+nav a {
+  color: #9e9e9e;
+  margin: 0 15px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.2s;
+}
+
+nav a:hover {
+  color: #fff;
+  text-shadow: 0 0 10px #6c63ff;
+}
+
+/* ==== HEADER ZILA ==== */
+.header {
+  text-align: center;
+  padding: 50px 20px;
+}
+
+.token-img {
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #6c63ff;
+  box-shadow: 0 0 25px #6c63ff;
+}
+
+/* ==== SECTION STYLE ==== */
+section {
+  width: 90%;
+  max-width: 900px;
+  margin: 40px auto;
+  background: #0f0f0f;
+  padding: 25px;
+  border-radius: 10px;
+  border: 1px solid #222;
+  box-shadow: 0 0 20px #2d2d2d50;
+}
+
+section h2 {
+  text-align: center;
+  color: #6c63ff;
+  margin-bottom: 15px;
+}
+
+/* ==== SOCIAL MEDIA ==== */
+.social-icons {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.social-icons img {
+  width: 38px;
+  margin: 0 8px;
+  filter: brightness(0) invert(1);
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.social-icons img:hover {
+  transform: scale(1.1);
+}
+
+/* ==== FOOTER ==== */
+footer {
+  width: 100%;
+  background: #000;
+  color: #aaa;
+  text-align: center;
+  padding: 15px 0;
+  font-size: 14px;
+  border-top: 1px solid #222;
+  margin-top: 40px;
+}
+</style>
 </head>
+
 <body>
-  <main class="hero">
-    <div class="overlay"></div>
 
-    <header class="topbar">
-      <div class="brand">ZILLA <span class="tag">Foundation</span></div>
-      <nav class="nav">
-        <a href="#about">About</a>
-        <a href="#ecosystem">Ecosystem</a>
-        <a href="#airdrop">Airdrop</a>
-        <a class="btn-outline" href="#connect">Connect</a>
-      </nav>
-    </header>
+<!-- NAVIGATION -->
+<nav>
+  <a href="#tokenomics">Tokenomics</a>
+  <a href="#mechanism">Mechanism</a>
+  <a href="#roadmap">Roadmap</a>
+  <a href="#whitepaper">Whitepaper</a>
+</nav>
 
-    <section class="center-panel">
-      <div class="coin-wrap">
-        <img src="zilla-coin.png" alt="Zilla Coin" class="coin" />
-      </div>
+<main>
 
-      <h1 class="title">Welcome to <strong>ZILLA Foundation</strong></h1>
+<!-- HEADER IMAGE -->
+<div class="header">
+  <img src="zilacoy.jpg" class="token-img" alt="Zila Token">
+  <h1>ZILA TOKEN — DARK AI ECOSYSTEM</h1>
+  <p>Polygon Network | AI-Powered Digital Ecosystem</p>
 
-      <p class="lead">
-        ZILLA (SZILA) is a multichain memecoin powered by innovation, community, and speed.
-      </p>
+  <p><b>Smart Contract:</b>  
+    <a href="https://polygonscan.com/token/0x8d001a3d482bad322450ed6b75f973a1c625a1a6" target="_blank" style="color:#6c63ff;">
+     0x8D001a3D482bAd322450ed6b75f973A1c625a1A6
+    </a>
+  </p>
+</div>
 
-      <p class="desc">
-        Built on Fotygon, Solana, and BNB Chain, unites meme culture with advanced technology.
-      </p>
+<!-- ABOUT ZILA -->
+<section id="about">
+  <h2>What is ZILA?</h2>
+  <p>
+    ZILA is an AI-driven decentralized token designed to integrate
+    blockchain technology with advanced Artificial Intelligence (Dark AI).
+    Built on the Polygon Network, ZILA empowers users through transparency,
+    automation, and community-based innovation.
+  </p>
 
-      <p class="cta-note">
-        Join us in building the future of decentralized fun!
-      </p>
+  <h3>Vision</h3>
+  <p>To create the strongest AI-enhanced memecoin ecosystem on Polygon.</p>
 
-      <div class="actions">
-        <a class="btn-primary" href="#airdrop">Join Airdrop</a>
-        <a class="btn-ghost" href="#whitepaper">Whitepaper</a>
-      </div>
+  <h3>Mission</h3>
+  <p>
+    • Promote Web3 adoption  
+    • Build powerful AI utility  
+    • Support a transparent and community-driven token ecosystem  
+  </p>
+</section>
 
-      <footer id="connect" class="footer">
-        <div>Connect with us: <a href="#" class="link">Telegram</a> • <a href="#" class="link">Twitter</a></div>
-      </footer>
-    </section>
-  </main>
+<!-- TOKENOMICS -->
+<section id="tokenomics">
+  <h2>Tokenomics</h2>
+  <p>Total Supply: <b>1,000,000,000 ZILA</b></p>
+  <p>Liquidity: 50%<br>Marketing: 20%<br>AI Development: 20%<br>Community & Airdrop: 10%</p>
+</section>
+
+<!-- MECHANISM -->
+<section id="mechanism">
+  <h2>Mechanism</h2>
+  <p>
+    • No tax<br>
+    • Fair launch<br>
+    • Liquidity locked<br>
+    • Built for long–term AI integration
+  </p>
+</section>
+
+<!-- ROADMAP -->
+<section id="roadmap">
+  <h2>Roadmap</h2>
+  <p>
+    <b>Phase 1:</b> Launch, Website, Smart Contract  
+    <br><b>Phase 2:</b> AI Integration, Tools Release  
+    <br><b>Phase 3:</b> CEX Listing, Global Expansion  
+  </p>
+</section>
+
+<!-- WHITEPAPER -->
+<section id="whitepaper">
+  <h2>Whitepaper</h2>
+  <p>
+    Download Whitepaper:  
+    <a href="whitepaper.pdf" style="color:#6c63ff;">Click Here</a>
+  </p>
+</section>
+
+<!-- SOCIAL MEDIA -->
+<div class="social-icons">
+  <a href="https://twitter.com" target="_blank"><img src="twitter.png"></a>
+  <a href="https://t.me" target="_blank"><img src="telegram.png"></a>
+  <a href="https://youtube.com" target="_blank"><img src="youtube.png"></a>
+  <a href="https://linkedin.com" target="_blank"><img src="linkedin.png"></a>
+</div>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  © 2025 Zila Foundation — All Rights Reserved
+</footer>
+
 </body>
 </html>
