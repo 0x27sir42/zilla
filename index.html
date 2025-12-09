@@ -92,10 +92,16 @@
                 transform: scale(1.1);
                 box-shadow: 0 0 15px rgba(108, 99, 255, 0.8);
             }
+            .footer {
+                background-color: #000;
+                padding: 2rem 1rem;
+                margin-top: auto;
+                width: 100%;
+            }
         }
     </style>
 </head>
-<body class="font-sans">
+<body class="font-sans flex flex-col min-h-screen"> <!-- Tambahkan flex untuk memastikan footer di bawah -->
     <!-- Navigation Bar -->
     <nav class="fixed top-0 left-0 w-full bg-black/80 backdrop-blur-md z-50 py-3">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -104,11 +110,11 @@
                     <i class="fa fa-cube mr-2"></i> ZILA
                 </a>
                 <div class="hidden md:flex space-x-8">
-                    <a href="#home" class="nav-link text-white hover:text-zila-primary">Home</a>
-                    <a href="#about" class="nav-link text-white hover:text-zila-primary">About Zila</a>
-                    <a href="#tokenomics" class="nav-link text-white hover:text-zila-primary">Tokenomics</a>
-                    <a href="#mechanism" class="nav-link text-white hover:text-zila-primary">Mechanism</a>
-                    <a href="#roadmap" class="nav-link text-white hover:text-zila-primary">Roadmap</a>
+                    <a href="home" class="nav-link text-white hover:text-zila-primary">Home</a>
+                    <a href="about.html" class="nav-link text-white hover:text-zila-primary">About Zila</a>
+                    <a href="tokenomics" class="nav-link text-white hover:text-zila-primary">Tokenomics</a>
+                    <a href="mechanism.html" class="nav-link text-white hover:text-zila-primary">Mechanism</a>
+                    <a href="roadmap.html" class="nav-link text-white hover:text-zila-primary">Roadmap</a>
                     <a href="whitepaper.html" class="nav-link text-white hover:text-zila-primary">Whitepaper</a>
                 </div>
                 <button class="md:hidden text-white text-2xl">
@@ -231,7 +237,7 @@
         </div>
     </section>
 
-    <!-- Roadmap Section -->
+    <!-- Roadmap Section (DI LENGKAPI) -->
     <section id="roadmap" class="section-bg" style="background-image: url('https://images.unsplash.com/photo-1504639725590-34d0984388bd?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');">
         <div class="section-overlay"></div>
         <div class="section-content">
@@ -256,19 +262,4 @@
                                 <p class="text-lg">Initial community building & airdrop campaign</p>
                             </div>
                             <div class="md:hidden text-center mt-4">
-                                <h3 class="text-2xl font-semibold text-zila-primary">Phase 1: Foundation</h3>
-                                <p class="text-lg">Initial community building & airdrop campaign</p>
-                            </div><div class="md:hidden text-center mt-4">
-                                <h3 class="text-2xl font-semibold text-zila-primary">Phase 1: Foundation</h3>
-                                <p class="text-lg">Initial community building & airdrop campaign</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Phase 2 -->
-                <div class="mb-12 relative">
-                    <div class="flex flex-col md:flex-row items-center">
-                        <div class="md:w-1/2 md:pr-8 md:text-right mb-4 md:mb-0 order-2 md:order-1">
-                            <div class="hidden md:block">
-                                <h3 class="text-2xl font-sem
+                                <h3
