@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zila Token - Official Website</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
@@ -38,11 +38,6 @@
                 padding: 2rem 1rem;
                 position: relative;
             }
-        .footer {
-    margin-top: auto !important;
-    position: relative;
-    bottom: 0;
-}
             .section-overlay {
                 position: absolute;
                 top: 0;
@@ -106,7 +101,8 @@
         }
     </style>
 </head>
-<body class="<body class="font-sans flex flex-col min-h-screen bg-black">> <!-- Tambahkan flex untuk memastikan footer di bawah -->
+<body class="font-sans flex flex-col min-h-screen bg-black"> <!-- Tambahkan flex untuk memastikan footer di bawah -->
+
     <!-- Navigation Bar -->
     <nav class="fixed top-0 left-0 w-full bg-black/80 backdrop-blur-md z-50 py-3">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -115,12 +111,12 @@
                     <i class="fa fa-cube mr-2"></i> ZILA
                 </a>
                 <div class="hidden md:flex space-x-8">
-                    <a href="home" class="nav-link text-white hover:text-zila-primary">Home</a>
-                    <a href="about.html" class="nav-link text-white hover:text-zila-primary">About Zila</a>
-                    <a href="tokenomics.html" class="nav-link text-white hover:text-zila-primary">Tokenomics</a>
-                    <a href="mechanism.html" class="nav-link text-white hover:text-zila-primary">Mechanism</a>
-                    <a href="roadmap.html" class="nav-link text-white hover:text-zila-primary">Roadmap</a>
-                    <a href="whitepaper.html" class="nav-link text-white hover:text-zila-primary">Whitepaper</a>
+                    <a href="#home" class="nav-link text-white hover:text-zila-primary">Home</a>
+                    <a href="#about" class="nav-link text-white hover:text-zila-primary">About Zila</a>
+                    <a href="#tokenomics" class="nav-link text-white hover:text-zila-primary">Tokenomics</a>
+                    <a href="#mechanism" class="nav-link text-white hover:text-zila-primary">Mechanism</a>
+                    <a href="#roadmap" class="nav-link text-white hover:text-zila-primary">Roadmap</a>
+                    <a href="#whitepaper" class="nav-link text-white hover:text-zila-primary">Whitepaper</a>
                 </div>
                 <button class="md:hidden text-white text-2xl">
                     <i class="fa fa-bars"></i>
@@ -130,7 +126,7 @@
     </nav>
 
     <!-- Home Section -->
-    <section id="home" class="section-bg" style="background-image: url('https://images.unsplash.com/photo-1618773928121-c32242e63f39?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');">
+    <section id="home" class="section-bg" style="background-image: url(');">
         <div class="section-overlay"></div>
         <div class="section-content text-center">
             <img src="zilacoy.jpg" alt="Zila Token" class="token-circle">
@@ -138,8 +134,8 @@
             <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">The Future of Decentralized Finance on Polygon Network</p>
             <div class="mb-6">
                 <span class="inline-block bg-zila-primary/20 px-4 py-2 rounded-full border border-zila-primary">
-                    <strong>Smart Contract:</strong> 
-                    <a href="https://polygonscan.com/token/0x8d001a3d482bad322450ed6b75f973a1c625a1a6" target="_blank" class="text-zila-primary hover:underline">
+                    <strong>Smart Contract:</strong>
+                    <a href="" target="_blank" class="text-zila-primary hover:underline">
                         0x8D001a3D482bAd322450ed6b75f973A1c625a1A6
                     </a>
                 </span>
@@ -151,7 +147,7 @@
     </section>
 
     <!-- About Zila Section -->
-    <section id="about" class="section-bg" style="background-image: url('https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');">
+    <section id="about" class="section-bg" style="background-image: url(');">
         <div class="section-overlay"></div>
         <div class="section-content">
             <h2 class="text-3xl md:text-5xl font-bold mb-6 text-center">About Zila Token</h2>
@@ -170,7 +166,7 @@
     </section>
 
     <!-- Tokenomics Section -->
-    <section id="tokenomics" class="section-bg" style="background-image: url('https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');">
+    <section id="tokenomics" class="section-bg" style="background-image: url(');">
         <div class="section-overlay"></div>
         <div class="section-content text-center">
             <h2 class="text-3xl md:text-5xl font-bold mb-8">TOKENOMICS</h2>
@@ -212,7 +208,7 @@
     </section>
 
     <!-- Mechanism Section -->
-    <section id="mechanism" class="section-bg" style="background-image: url('https://images.unsplash.com/photo-1551632811-561732d1e306?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');">
+    <section id="mechanism" class="section-bg" style="background-image: url(');">
         <div class="section-overlay"></div>
         <div class="section-content">
             <h2 class="text-3xl md:text-5xl font-bold mb-8 text-center">TOKEN MECHANISM</h2>
@@ -243,14 +239,14 @@
     </section>
 
     <!-- Roadmap Section (DI LENGKAPI) -->
-    <section id="roadmap" class="section-bg" style="background-image: url('https://images.unsplash.com/photo-1504639725590-34d0984388bd?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');">
+    <section id="roadmap" class="section-bg" style="background-image: url(');">
         <div class="section-overlay"></div>
         <div class="section-content">
             <h2 class="text-3xl md:text-5xl font-bold mb-8 text-center">ROADMAP</h2>
             <div class="relative max-w-4xl mx-auto">
                 <!-- Timeline Line -->
                 <div class="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-zila-primary/50"></div>
-                
+
                 <!-- Phase 1 -->
                 <div class="mb-12 relative">
                     <div class="flex flex-col md:flex-row items-center">
@@ -268,14 +264,44 @@
                             </div>
                             <div class="md:hidden text-center mt-4">
                                 <h3
-                                    <!-- Footer -->
-<footer class="footer text-center text-white border-t border-zila-primary/20">
-    <div class="mb-4 flex justify-center space-x-4">
-        <a href="https://twitter.com/zilafodn" target="_blank" class="social-icon bg-white/10"><i class="fa fa-twitter"></i></a>
-        <a href="https://t.me/zilacoin" target="_blank" class="social-icon bg-white/10"><i class="fa fa-telegram"></i></a>
-        <a href="https://youtube.com/" target="_blank" class="social-icon bg-white/10"><i class="fa fa-youtube"></i></a>
-        <a href="https://linkedin.com/" target="_blank" class="social-icon bg-white/10"><i class="fa fa-linkedin"></i></a>
-    </div>
+                                    class="text-xl font-semibold text-zila-primary">Phase 1: Foundation</h3>
+                                <p class="text-lg">Initial community building & airdrop campaign</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-    <p class="text-sm mt-2 opacity-80">© 2025 ZILA. All Rights Reserved.</p>
-</footer>
+                <!-- Phase 2 -->
+                <!-- Phase 3 -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Whitepaper Section -->
+    <section id="whitepaper" class="section-bg" style="background-image: url(');">
+        <div class="section-overlay"></div>
+        <div class="section-content text-center">
+            <h2 class="text-3xl md:text-5xl font-bold mb-8">WHITE PAPER</h2>
+            <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
+                Explore more details about Zila Token
+            </p>
+            <a href=""
+                class="inline-block bg-zila-primary hover:bg-zila-primary/90 text-white font-bold py-3 px-8 rounded-full transition duration-300">
+                Read more <i class="fa fa-arrow-right ml-2"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer text-center text-white border-t border-zila-primary/20 mt-auto">
+        <div class="mb-4 flex justify-center space-x-4">
+            <a href="" target="_blank" class="social-icon bg-white/10"><i class="fa fa-twitter"></i></a>
+            <a href="" target="_blank" class="social-icon bg-white/10"><i class="fa fa-telegram"></i></a>
+            <a href="" target="_blank" class="social-icon bg-white/10"><i class="fa fa-youtube"></i></a>
+            <a href="" target="_blank" class="social-icon bg-white/10"><i class="fa fa-linkedin"></i></a>
+        </div>
+        <p class="text-sm mt-2 opacity-80">© 2025 ZILA. All Rights Reserved.</p>
+    </footer>
+
+</body>
+</html>
