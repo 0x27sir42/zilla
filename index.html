@@ -92,16 +92,29 @@
             z-index: 9999;
             flex-direction: column;
         }
+
         #loading-screen img {
             width: 180px;
             height: 180px;
             animation: pulse 1.5s infinite;
             border-radius: 50%;
         }
+
         @keyframes pulse {
-            0% { transform: scale(1); opacity: 0.8; }
-            50% { transform: scale(1.1); opacity: 1; }
-            100% { transform: scale(1); opacity: 0.8; }
+            0% {
+                transform: scale(1);
+                opacity: 0.8;
+            }
+
+            50% {
+                transform: scale(1.1);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 0.8;
+            }
         }
 
         /* VIDEO STYLING */
@@ -115,6 +128,7 @@
             border: 3px solid #6C63FF;
             box-shadow: 0 0 30px rgba(108, 99, 255, 0.5);
         }
+
         .zila-video {
             width: 100%;
             height: auto;
@@ -134,21 +148,23 @@
     </script>
 
 </head>
+
 <body class="bg-black font-sans">
 
     <!-- LOADING SCREEN -->
     <div id="loading-screen">
-        <img src="godzilaa.png">
+        <img src="godzilaa.png" alt="ZILA Loading" />
         <p class="text-white mt-4 text-lg tracking-widest">Loading...</p>
     </div>
 
     <!-- NAVBAR -->
     <nav class="fixed top-0 left-0 w-full bg-black/80 backdrop-blur-xl shadow-lg z-50 py-4">
         <div class="max-w-7xl mx-auto px-4 flex justify-between items-center">
-            <a class="text-3xl font-bold text-white tracking-wider">ZILA</a>
+            <a class="text-3xl font-bold text-white tracking-wider" href="#">ZILA</a>
 
             <!-- Mobile Button -->
-            <button class="md:hidden text-white text-3xl" onclick="document.getElementById('mobileMenu').classList.toggle('hidden')">
+            <button class="md:hidden text-white text-3xl"
+                onclick="document.getElementById('mobileMenu').classList.toggle('hidden')">
                 ☰
             </button>
 
@@ -164,11 +180,11 @@
 
         <!-- MOBILE MENU -->
         <div id="mobileMenu" class="hidden md:hidden bg-black/95 px-6 py-4 space-y-4 text-center">
-            <a href="#home" class="block text-white">Home</a>
-            <a href="#about" class="block text-white">About</a>
-            <a href="#tokenomics" class="block text-white">Tokenomics</a>
-            <a href="#roadmap" class="block text-white">Roadmap</a>
-            <a href="whitepaper.html" class="block text-white">Whitepaper</a>
+            <a class="block text-white" href="#home">Home</a>
+            <a class="block text-white" href="#about">About</a>
+            <a class="block text-white" href="#tokenomics">Tokenomics</a>
+            <a class="block text-white" href="#roadmap">Roadmap</a>
+            <a class="block text-white" href="whitepaper.html">Whitepaper</a>
         </div>
     </nav>
 
@@ -176,7 +192,7 @@
     <section id="home" class="section-bg" style="background-image:url('gyokeres.png');">
         <div class="section-overlay"></div>
         <div class="section-content">
-            <img src="godzilaa.png" class="token-circle mb-6">
+            <img src="godzilaa.png" alt="ZILA Token" class="token-circle mb-6">
 
             <h1 class="text-5xl font-bold mb-3">ZILA TOKEN</h1>
             <p class="text-xl opacity-90 mb-6">Next-Gen Dark AI & Decentralized Finance on Polygon</p>
@@ -185,9 +201,9 @@
                 <span class="inline-block bg-zila-primary/20 px-5 py-2 rounded-full border border-zila-primary">
                     Smart Contract:
                     <a href="https://polygonscan.com/token/0xe54c126bfe1cda9a347f2a35dfac5a9ca155f9a9"
-                       target="_blank"
-                       class="text-zila-primary font-bold hover:underline">
-                       0xE54c126BfE1cdA9A347F2a35DFAc5a9ca155f9A9
+                        target="_blank"
+                        class="text-zila-primary font-bold hover:underline">
+                        0xE54c126BfE1cdA9A347F2a35DFAc5a9ca155f9A9
                     </a>
                 </span>
             </div>
@@ -209,9 +225,9 @@
             <div class="zila-video-container">
                 <video class="zila-video" controls poster="zila-poster.jpg">
                     <!-- Ganti dengan URL/letak file video Anda -->
-                    <source src="Video tanpa judul.mp4" type="video/mp4">
+                    <source src="zila-intro.mp4" type="video/mp4">
                     <!-- Tambahkan format video lain jika diperlukan untuk kompatibilitas -->
-                    <source src="example_small.webm" type="video/webm">
+                    <source src="zila-intro.webm" type="video/webm">
                     Maaf, browser Anda tidak mendukung pemutaran video. Silakan perbarui browser Anda.
                 </video>
             </div>
@@ -224,10 +240,23 @@
         <div class="section-overlay"></div>
 
         <div class="section-content">
-            <h2 class="text-4xl font-bold mb-10">TOKENOMICS</h2>
+            <h2 class="text-4xl font-bold mb-4">TOKENOMICS</h2>
 
-            <div class="grid md:grid-cols-3 lg:grid-cols-4 gap-6 px-4">
+            <!-- GAMBAR PIE CHART -->
+            <img src="URL_GAMBAR_PIE_CHART_ANDA" alt="Tokenomics Pie Chart" class="mb-6 mx-auto" style="max-width: 500px;">
 
+            <p class="text-lg opacity-90">
+                Total Supply: 1,000,000,000<br>
+                Staking: 40%<br>
+                Liquidity (Locked): 10%<br>
+                Team & Dev: 10% (Locked 2 Years)<br>
+                Ecosystem: 20%<br>
+                Airdrop: 10%<br>
+                Burn: 5%<br>
+                Partnership: 5%
+            </p>
+
+            <div class="grid md:grid-cols-3 lg:grid-cols-4 gap-6 px-4 mt-6">
                 <div class="bg-white/10 p-6 rounded-xl backdrop-blur border border-zila-primary/40">
                     <h3 class="text-xl text-zila-primary mb-2">Total Supply</h3>
                     <p class="text-3xl">1,000,000,000</p>
@@ -267,7 +296,6 @@
                     <h3 class="text-xl text-zila-primary mb-2">Partnership</h3>
                     <p class="text-3xl">5%</p>
                 </div>
-
             </div>
         </div>
     </section>
@@ -317,7 +345,8 @@
         <div class="section-content">
             <h2 class="text-4xl font-bold mb-6">AIRDROP ZILA x QUESTN</h2>
 
-            <a href="https://app.questn.com/quest/1115489347886567594" class="bg-zila-primary hover:bg-zila-primary/80 text-white px-8 py-3 rounded-full text-xl">
+            <a href="https://app.questn.com/quest/1115489347886567594"
+                class="bg-zila-primary hover:bg-zila-primary/80 text-white px-8 py-3 rounded-full text-xl">
                 JOIN AIRDROP
             </a>
         </div>
@@ -337,4 +366,5 @@
     </footer>
 
 </body>
+
 </html>
