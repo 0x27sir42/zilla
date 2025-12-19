@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZILA Presale</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.min.js"></script>
+
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        zila: { primary:'#6C63FF' }
+      }
+    }
+  }
+}
+</script>
+
+<style>
+.section-bg{
+  background-image:url('https://images.unsplash.com/photo-1534796636912-3b95b3ab5986');
+  background-size:cover;
+  background-position:center;
+  background-attachment:fixed;
+  min-height:100vh;
+  position:relative;
+}
+.section-overlay{
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,.7);
+}
+</style>
+</head>
+
+<body class="text-white bg-black">
+
+<section class="section-bg flex items-center justify-center px-4">
+<div class="section-overlay"></div>
+
+<div class="relative z-10 max-w-xl w-full bg-black/70 backdrop-blur-xl border border-zila-primary/40 rounded-2xl p-8 text-center">
+
+<h1 class="text-4xl font-bold mb-2">ZILA PRESALE</h1>
+<p class="opacity-80 mb-4">Official Token Sale</p>
+
+<!-- COUNTDOWN -->
+<p class="text-sm opacity-70 mb-2">Presale Ends In</p>
+<p id="countdown" class="text-xl font-bold mb-6"></p>
+
+<!-- WALLET -->
+<button onclick="connectWallet()" class="bg-zila-primary px-6 py-2 rounded-full mb-3">
+Connect Wallet
+</button>
+<p id="walletStatus" class="text-sm opacity-80 mb-4">Not Connected</p>
+
+<!-- BUY -->
+<input id="maticInput" type="number" placeholder="MATIC Amount"
+class="w-full px-4 py-2 rounded text-black mb-2">
+
+<p id="zilaEstimate" class="text-sm opacity-80 mb-4">You will receive: 0 ZILA</p>
+
+<button onclick="buyTokens()" class="w-full bg-green-600 py-2 rounded-full mb-4 font-bold">
+Buy ZILA
+</button>
+
+<!-- PROGRESS -->
+<div class="w-full bg-gray-700 h-4 rounded-full">
+<div id="progressBar" class="bg-zila-primary h-4 rounded-full" style="width:0%"></div>
+</div>
+<p id="progressText" class="text-sm mt-2 opacity-80 mb-6">0 / 500 MATIC Raised</p>
+
+<!-- CLAIM -->
+<button onclick="claimTokens()" class="w-full bg-blue-600 py-2 rounded-full mb-4">
+Claim Tokens
+</button>
+
+<!-- ADD TOKEN -->
+<button onclick="addToken()" class="w-full bg-purple-600 py-2 rounded-full mb-6">
+Add ZILA to MetaMask
+</button>
+
+<hr class="border-white/20 my-6">
+
+<!-- TOKENOMICS -->
+<h2 class="text-2xl font-bold mb-2">Tokenomics</h2>
+<p class="text-sm opacity-90 leading-relaxed">
+Total Supply: 1,000,000,000<br>
+Staking: 40%<br>
+Liquidity (Locked): 10%<br>
+Team & Dev: 5% (Locked 2 Years)<br>
+Ecosystem: 20%<br>
+Airdrop: 10%<br>
+Burn: 5%<br>
+Private Sale: 5% (TGE 10%)<br>
+Public Sale: 5% (TGE 10%)
+</p>
+
+<hr class="border-white/20 my-6">
+
+<!-- VESTING -->
+<h2 class="text-2xl font-bold mb-2">Vesting & Lock</h2>
+<p class="text-sm opacity-80">
+• Private & Public Sale: 10% TGE<br>
+• Remaining vested monthly<br>
+• Team tokens locked for 24 months<br>
+• Liquidity locked
+</p>
+
+</div>
+</section>
+
+<script>
+/* ===== CONFIG ===== */
+const PRESALE_CONTRACT = "0x877E30577de32eAb6dad709c337494994d275e48";
+const TOKEN_ADDRESS    = "0xE54c126BfE1cdA9A347F2a35DFAc5a9ca155f9A9";
+const TOKEN_SYMBOL     = "ZILA";
+const TOKEN_DECIMALS   = 18;
+const TOKEN_IMAGE      = "https://0x27sir42.github.io/zila-web/";
+const PRICE = 0.0001; // 1 ZILA price in MATIC
+
+const ABI = [
+ "function buyTokens() payable",
+ "function claimTokens()",
+ "function totalRaised() view returns(uint256)",
+ "function hardCap() view returns(uint256)"
+];
+
+let provider, signer, contract;
+
+/* ===== COUNTDOWN ===== */
+const endTime = new Date().getTime() + (7 * 24 * 60 * 60 * 1000);
+setInterval(()=>{
+  const now = new Date().getTime();
+  const d = endTime - now;
+  if(d <= 0){ countdown.innerText="Presale Ended"; return;}
+  countdown.innerText =
+   Math.floor(d/86400000)+"d "+
+   Math.floor(d%86400000/3600000)+"h "+
+   Math.floor(d%3600000/60000)+"m";
+},1000);
+
+/* ===== CONNECT ===== */
+async function connectWallet(){
+ if(!window.ethereum){alert("MetaMask required");return;}
+ provider=new ethers.providers.Web3Provider(window.ethereum);
+ await provider.send("eth_requestAccounts",[]);
+ signer=provider.getSigner();
+ contract=new ethers.Contract(PRESALE_CONTRACT,ABI,signer);
+ walletStatus.innerText="Connected";
+ updateProgress();
+}
+
+/* ===== BUY ===== */
+maticInput.oninput=()=>{
+ zilaEstimate.innerText=
+ "You will receive: "+(maticInput.value/PRICE).toFixed(2)+" ZILA";
+}
+
+async function buyTokens(){
+ const amt=maticInput.value;
+ if(!amt)return;
+ const tx=await contract.buyTokens({value:ethers.utils.parseEther(amt)});
+ await tx.wait();
+ updateProgress();
+}
+
+/* ===== CLAIM ===== */
+async function claimTokens(){
+ try{
+   const tx=await contract.claimTokens();
+   await tx.wait();
+   alert("Claim successful");
+ }catch(e){alert("Claim not available yet");}
+}
+
+/* ===== PROGRESS ===== */
+async function updateProgress(){
+ const r=Number(ethers.utils.formatEther(await contract.totalRaised()));
+ const h=Number(ethers.utils.formatEther(await contract.hardCap()));
+ progressBar.style.width=Math.min((r/h)*100,100)+"%";
+ progressText.innerText=`${r} / ${h} MATIC Raised`;
+}
+
+/* ===== ADD TOKEN ===== */
+async function addToken(){
+ await ethereum.request({
+ method:'wallet_watchAsset',
+ params:{
+  type:'ERC20',
+  options:{
+   address:0xE54c126BfE1cdA9A347F2a35DFAc5a9ca155f9A9,
+   symbol:ZILA,
+   decimals:18,
+   image:TOKEN_IMAGE
+  }
+ }
+});
+}
+</script>
+
+</body>
+</html>
