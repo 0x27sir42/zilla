@@ -221,8 +221,8 @@
 <script src="https://s3.tradingview.com/tv.js"></script>
 <script>
 new TradingView.widget({
-    "container_id": "tradingview_matic",
-    "symbol": "BINANCE:MATICUSDT",
+    "container_id": "tradingview_pol",
+    "symbol": "BINANCE:POLUSDT",
     "interval": "15",
     "timezone": "Etc/UTC",
     "theme": "dark",
@@ -240,8 +240,8 @@ new TradingView.widget({
                 <div class="grid md:grid-cols-3 gap-6 mb-8">
                     <div class="text-center">
                         <h3 class="text-lg opacity-80 mb-2">Total Raised</h3>
-                        <p class="text-3xl font-bold text-zila-primary">125.4 ETH</p>
-                        <p class="text-sm opacity-70">of 500 ETH Goal</p>
+                        <p class="text-3xl font-bold text-zila-primary">3000 POL</p>
+                        <p class="text-sm opacity-70">of 300 POLYGON Goal</p>
                         <div class="w-full h-2 bg-white/10 rounded-full mt-2">
                             <div class="h-full bg-zila-primary rounded-full" style="width: 25%"></div>
                         </div>
@@ -253,8 +253,8 @@ new TradingView.widget({
                     </div>
                     <div class="text-center">
                         <h3 class="text-lg opacity-80 mb-2">Price per ZILA</h3>
-                        <p class="text-3xl font-bold text-zila-primary">0.0000025 ETH</p>
-                        <p class="text-sm opacity-70">1 ETH = 400,000 ZILA</p>
+                        <p class="text-3xl font-bold text-zila-primary">0.0000025 POL</p>
+                        <p class="text-sm opacity-70">1 POL = 1600 ZILA</p>
                     </div>
                 </div>
                 <!-- PURCHASE FORM -->
@@ -262,14 +262,17 @@ new TradingView.widget({
                     <h3 class="text-2xl font-bold mb-4 text-center">Buy ZILA Tokens</h3>
                     <div class="flex flex-col md:flex-row gap-4 mb-6">
                         <div class="flex-1">
-                            <label class="block text-sm opacity-80 mb-2">Enter ETH Amount</label>
-                            <input type="number" step="0.01" min="0.1" placeholder="0.00"
-                                class="w-full bg-white/10 border border-zila-primary/40 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-zila-primary">
+                            <label class="block text-sm opacity-80 mb-2">Enter POL Amount</label>
+                            <input id="maticAmount"
+type="number" step="0.01" min="0.1" placeholder="0.00"
+oninput="calculateZila()"
+class="w-full bg-white/10 border border-zila-primary/40 rounded-lg px-4 py-3 text-white">
                         </div>
                         <div class="flex-1">
                             <label class="block text-sm opacity-80 mb-2">ZILA Received</label>
-                            <input type="text" readonly placeholder="0.00"
-                                class="w-full bg-white/5 border border-zila-primary/20 rounded-lg px-4 py-3 text-white cursor-not-allowed">
+                            <input id="zilaReceived"
+type="text" readonly placeholder="0"
+class="w-full bg-white/5 border border-zila-primary/20 rounded-lg px-4 py-3 text-white cursor-not-allowed">
                         </div>
                     </div>
                     <div class="text-center">
@@ -280,7 +283,7 @@ class="bg-zila-primary hover:bg-zila-primary/80 text-white px-8 py-3 rounded-ful
 
 <button onclick="buyToken()"
 class="mt-4 bg-green-500 hover:bg-green-600 text-white px-8 py-3 rounded-full text-xl font-bold w-full md:w-auto">
-<i class="fa fa-shopping-cart mr-2"></i> Buy with MATIC
+<i class="fa fa-shopping-cart mr-2"></i> Buy with ZILA
 </button>
 
 <p id="walletAddress" class="text-sm mt-3 opacity-70 text-center"></p>
@@ -461,6 +464,22 @@ async function buyToken(){
     await contract.buyToken({
         value: ethers.utils.parseEther(amount)
     });
+}
+    </script>
+    <script>
+const ZILA_RATE = 1800; // 1 MATIC = 1800 ZILA
+
+function calculateZila() {
+    const matic = document.getElementById("maticAmount").value;
+    const zilaField = document.getElementById("zilaReceived");
+
+    if (!matic || matic <= 0) {
+        zilaField.value = 0;
+        return;
+    }
+
+    const zila = matic * ZILA_RATE;
+    zilaField.value = zila.toLocaleString();
 }
     </script>
 </body>
