@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZILA Token - Presale</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+
+<!-- ETHERS JS -->
+<script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.min.js"></script>
+
+<script>
+tailwind.config = {
+theme: {
+extend: {
+colors: {
+zila: {
+primary: '#6C63FF',
+dark: '#0A0A0F',
+}
+}
+}
+}
+}
+</script>
+
+<style>
+.partner-logo{
+background: rgba(255,255,255,0.05);
+border:1px solid #6C63FF;
+border-radius:12px;
+padding:20px;
+transition:.3s;
+}
+.partner-logo:hover{
+transform:scale(1.08);
+box-shadow:0 0 20px #6C63FF;
+}
+</style>
+</head>
+
+<body class="bg-black text-white">
+
+<!-- ===================== PRESALE ===================== -->
+<section class="min-h-screen flex items-center justify-center">
+<div class="max-w-6xl w-full p-6">
+
+<h1 class="text-4xl font-bold text-center mb-8">
+ZILA TOKEN <span class="text-zila-primary">PRESALE</span>
+</h1>
+
+<!-- ===================== TRADINGVIEW CHART ===================== -->
+<div class="mb-12">
+<h2 class="text-2xl font-bold mb-4 text-center">Polygon (MATIC) Live Price</h2>
+
+<div class="rounded-xl overflow-hidden border border-zila-primary">
+<div class="tradingview-widget-container">
+<div id="tradingview_matic"></div>
+<script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+<script>
+new TradingView.widget({
+"container_id": "tradingview_matic",
+"symbol": "BINANCE:MATICUSDT",
+"interval": "15",
+"timezone": "Etc/UTC",
+"theme": "dark",
+"style": "1",
+"locale": "en",
+"toolbar_bg": "#000000",
+"enable_publishing": false,
+"hide_top_toolbar": true,
+"save_image": false,
+"height": 420
+});
+</script>
+</div>
+</div>
+</div>
+
+<!-- ===================== BUY CARD ===================== -->
+<div class="bg-black/70 border border-zila-primary rounded-xl p-6 mb-12">
+
+<div class="mb-4">
+<label>Amount (ETH)</label>
+<input id="ethAmount" type="number" class="w-full p-3 bg-black border border-zila-primary rounded">
+</div>
+
+<button onclick="connectWallet()" id="walletBtn"
+class="w-full bg-zila-primary py-3 rounded font-bold mb-3">
+Connect Wallet
+</button>
+
+<button onclick="buyToken()"
+class="w-full bg-green-500 py-3 rounded font-bold">
+Buy Token
+</button>
+
+<p id="walletAddress" class="text-sm mt-3 opacity-70 text-center"></p>
+</div>
+
+<!-- ===================== PARTNERSHIP ===================== -->
+<div class="mb-16">
+<h2 class="text-3xl font-bold text-center mb-8">Our Partnerships</h2>
+
+<div class="grid grid-cols-2 md:grid-cols-5 gap-6">
+<div class="partner-logo"><img src="partner1.png" class="mx-auto"></div>
+<div class="partner-logo"><img src="partner2.png" class="mx-auto"></div>
+<div class="partner-logo"><img src="partner3.png" class="mx-auto"></div>
+<div class="partner-logo"><img src="partner4.png" class="mx-auto"></div>
+<div class="partner-logo"><img src="partner5.png" class="mx-auto"></div>
+</div>
+</div>
+
+</div>
+</section>
+
+<!-- ===================== WALLET SCRIPT ===================== -->
+<script>
+let provider;
+let signer;
+let userAddress;
+
+// GANTI DENGAN CONTRACT KAMU
+const CONTRACT_ADDRESS = "0xYOUR_CONTRACT_ADDRESS";
+const ABI = [
+"function buyToken() payable"
+];
+
+async function connectWallet(){
+if(window.ethereum){
+provider = new ethers.providers.Web3Provider(window.ethereum);
+await provider.send("eth_requestAccounts", []);
+signer = provider.getSigner();
+userAddress = await signer.getAddress();
+document.getElementById("walletAddress").innerText =
+"Connected: " + userAddress.slice(0,6) + "..." + userAddress.slice(-4);
+document.getElementById("walletBtn").innerText = "Wallet Connected";
+}else{
+alert("Please install MetaMask");
+}
+}
+
+async function buyToken(){
+if(!signer){
+alert("Connect wallet first");
+return;
+}
+const ethAmount = document.getElementById("ethAmount").value;
+const contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
+await contract.buyToken({
+value: ethers.utils.parseEther(ethAmount)
+});
+}
+</script>
+
+</body>
+</html>
