@@ -260,21 +260,28 @@ new TradingView.widget({
                 <!-- PURCHASE FORM -->
                 <div class="bg-black/50 p-6 rounded-lg border border-zila-primary/30">
                     <h3 class="text-2xl font-bold mb-4 text-center">Buy ZILA Tokens</h3>
-                    <div class="flex flex-col md:flex-row gap-4 mb-6">
-                        <div class="flex-1">
-                            <label class="block text-sm opacity-80 mb-2">Enter POL Amount</label>
-                            <input id="maticAmount"
-type="number" step="0.01" min="0.1" placeholder="0.00"
-oninput="calculateZila()"
-class="w-full bg-white/10 border border-zila-primary/40 rounded-lg px-4 py-3 text-white">
-                        </div>
-                        <div class="flex-1">
-                            <label class="block text-sm opacity-80 mb-2">ZILA Received</label>
-                            <input id="zilaReceived"
-type="text" readonly placeholder="0"
-class="w-full bg-white/5 border border-zila-primary/20 rounded-lg px-4 py-3 text-white cursor-not-allowed">
-                        </div>
-                    </div>
+
+<div class="flex flex-col md:flex-row gap-4 mb-6">
+    <div class="flex-1">
+        <label class="block text-sm opacity-80 mb-2">Enter MATIC Amount</label>
+        <input id="maticAmount"
+               type="number"
+               step="0.01"
+               min="0.1"
+               placeholder="0.00"
+               oninput="calculateZila()"
+               class="w-full bg-white/10 border border-zila-primary/40 rounded-lg px-4 py-3 text-white focus:outline-none">
+    </div>
+
+    <div class="flex-1">
+        <label class="block text-sm opacity-80 mb-2">ZILA Received</label>
+        <input id="zilaReceived"
+               type="text"
+               readonly
+               placeholder="0"
+               class="w-full bg-white/5 border border-zila-primary/20 rounded-lg px-4 py-3 text-white cursor-not-allowed">
+    </div>
+</div>
                     <div class="text-center">
                         <button onclick="connectWallet()"
 class="bg-zila-primary hover:bg-zila-primary/80 text-white px-8 py-3 rounded-full text-xl font-bold w-full md:w-auto">
@@ -419,69 +426,100 @@ class="mt-4 bg-green-500 hover:bg-green-600 text-white px-8 py-3 rounded-full te
     <script>
 let provider, signer, userAddress;
 
-// GANTI DENGAN SMART CONTRACT PRESALE KAMU
 const CONTRACT_ADDRESS = "0xYOUR_POLYGON_CONTRACT";
 const ABI = [
     "function buyToken() payable"
 ];
 
-// AUTO CONNECT POLYGON
-async function connectWallet(){
+// CONNECT WALLET + SWITCH POLYGON (AMAN)
+async function connectWallet() {
     if (!window.ethereum) {
-        alert("Please install MetaMask");
+        alert("MetaMask not found");
         return;
     }
 
-    provider = new ethers.providers.Web3Provider(window.ethereum);
-    await provider.send("eth_requestAccounts", []);
-    signer = provider.getSigner();
-    userAddress = await signer.getAddress();
+    try {
+        await window.ethereum.request({ method: "eth_requestAccounts" });
 
-    // Auto switch ke Polygon
-    await window.ethereum.request({
-        method: "wallet_switchEthereumChain",
-        params: [{ chainId: "0x89" }] // Polygon Mainnet
-    });
+        provider = new ethers.providers.Web3Provider(window.ethereum);
+        signer = provider.getSigner();
+        userAddress = await signer.getAddress();
 
-    document.getElementById("walletAddress").innerText =
-        "Connected: " + userAddress.slice(0,6) + "..." + userAddress.slice(-4);
+        const network = await provider.getNetwork();
+
+        if (network.chainId !== 137) {
+            try {
+                await window.ethereum.request({
+                    method: "wallet_switchEthereumChain",
+                    params: [{ chainId: "0x89" }]
+                });
+            } catch (err) {
+                if (err.code === 4902) {
+                    await window.ethereum.request({
+                        method: "wallet_addEthereumChain",
+                        params: [{
+                            chainId: "0x89",
+                            chainName: "Polygon Mainnet",
+                            rpcUrls: ["https://polygon-rpc.com"],
+                            nativeCurrency: {
+                                name: "MATIC",
+                                symbol: "MATIC",
+                                decimals: 18
+                            },
+                            blockExplorerUrls: ["https://polygonscan.com"]
+                        }]
+                    });
+                } else {
+                    throw err;
+                }
+            }
+        }
+
+        document.getElementById("walletAddress").innerText =
+            "Connected: " + userAddress.slice(0, 6) + "..." + userAddress.slice(-4);
+
+    } catch (error) {
+        console.error(error);
+        alert("Wallet connection rejected");
+    }
 }
 
-// BUY TOKEN WITH MATIC
-async function buyToken(){
+// BUY TOKEN
+async function buyToken() {
     if (!signer) {
         alert("Connect wallet first");
         return;
     }
 
-    const amount = document.querySelector('input[type="number"]').value;
-    if (!amount || amount <= 0) {
+    const matic = document.getElementById("maticAmount").value;
+
+    if (!matic || matic <= 0) {
         alert("Enter MATIC amount");
         return;
     }
 
     const contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
+
     await contract.buyToken({
-        value: ethers.utils.parseEther(amount)
+        value: ethers.utils.parseEther(matic)
     });
 }
-    </script>
-    <script>
-const ZILA_RATE = 1800; // 1 MATIC = 1800 ZILA
+
+// HITUNG ZILA REALTIME (UI)
+const ZILA_RATE = 1800;
 
 function calculateZila() {
     const matic = document.getElementById("maticAmount").value;
-    const zilaField = document.getElementById("zilaReceived");
+    const zila = document.getElementById("zilaReceived");
 
     if (!matic || matic <= 0) {
-        zilaField.value = 0;
+        zila.value = 0;
         return;
     }
 
-    const zila = matic * ZILA_RATE;
-    zilaField.value = zila.toLocaleString();
+    zila.value = (matic * ZILA_RATE).toLocaleString();
 }
-    </script>
+            </script>
 </body>
 
                           </html>
