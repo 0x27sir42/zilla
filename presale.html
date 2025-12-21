@@ -1,355 +1,159 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZILA Token - Presale</title>
-    <script src=""></script>
-    <link href="" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        zila: {
-                            primary: '#6C63FF',
-                            dark: '#0A0A0F',
-                        }
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'system-ui', 'sans-serif']
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        /* REUSED STYLES FROM DASHBOARD */
-        .token-circle {
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 4px solid #6C63FF;
-            box-shadow: 0 0 25px #6C63FF;
-            margin: 0 auto;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZILA Token - Presale</title>
 
-        .section-bg {
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            min-height: 100vh;
-            position: relative;
-            padding: 8rem 1rem 4rem;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-        }
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
 
-        .section-overlay {
-            position: absolute;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.65);
-        }
+<!-- ETHERS JS -->
+<script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.min.js"></script>
 
-        .section-content {
-            position: relative;
-            z-index: 2;
-            color: white;
-            max-width: 1200px;
-            width: 100%;
-        }
+<script>
+tailwind.config = {
+theme: {
+extend: {
+colors: {
+zila: {
+primary: '#6C63FF',
+dark: '#0A0A0F',
+}
+}
+}
+}
+}
+</script>
 
-        .social-icon {
-            width: 48px;
-            height: 48px;
-            background: #000;
-            border-radius: 50%;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: 0.3s;
-        }
-
-        .social-icon:hover {
-            transform: scale(1.12);
-            box-shadow: 0 0 15px #6C63FF;
-            color: #6C63FF;
-        }
-
-        #loading-screen {
-            position: fixed;
-            inset: 0;
-            background: #000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            flex-direction: column;
-        }
-
-        #loading-screen img {
-            width: 180px;
-            height: 180px;
-            animation: pulse 1.5s infinite;
-            border-radius: 50%;
-        }
-
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
-                opacity: 0.8;
-            }
-
-            50% {
-                transform: scale(1.1);
-                opacity: 1;
-            }
-
-            100% {
-                transform: scale(1);
-                opacity: 0.8;
-            }
-        }
-
-        /* NEW PRESALE STYLES */
-        .presale-card {
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(12px);
-            border: 2px solid #6C63FF;
-            border-radius: 16px;
-            box-shadow: 0 0 30px rgba(108, 99, 255, 0.3);
-        }
-
-        .feature-card {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid #6C63FF/20;
-            border-radius: 12px;
-            transition: 0.3s;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 0 20px rgba(108, 99, 255, 0.4);
-            border-color: #6C63FF;
-        }
-
-        /* Tokenomics Image Style */
-        .tokenomics-image {
-            max-width: 500px;
-            border-radius: 50%; /* Make the image perfectly round */
-            border: 2px solid #6C63FF;
-            margin: 0 auto;
-            display: block; /* Ensure the image is centered */
-        }
-    </style>
-    <script>
-        window.onload = function () {
-            setTimeout(() => {
-                document.getElementById("loading-screen").style.opacity = "0";
-                setTimeout(() => {
-                    document.getElementById("loading-screen").style.display = "none";
-                }, 400);
-            }, 1200);
-        }
-    </script>
+<style>
+.partner-logo{
+background: rgba(255,255,255,0.05);
+border:1px solid #6C63FF;
+border-radius:12px;
+padding:20px;
+transition:.3s;
+}
+.partner-logo:hover{
+transform:scale(1.08);
+box-shadow:0 0 20px #6C63FF;
+}
+</style>
 </head>
 
-<body class="bg-black font-sans">
-    <!-- LOADING SCREEN (SAME AS DASHBOARD) -->
-    <div id="loading-screen">
-        <img src="godzilaa.png" alt="ZILA Loading" />
-        <p class="text-white mt-4 text-lg tracking-widest">Loading...</p>
-    </div>
-    <!-- NAVBAR (SIMPLIFIED FOR PRESALE FOCUS) -->
-    <nav class="fixed top-0 left-0 w-full bg-black/80 backdrop-blur-xl shadow-lg z-50 py-4">
-        <div class="max-w-7xl mx-auto px-4 flex justify-between items-center">
-            <a class="text-3xl font-bold text-white tracking-wider" href="#">ZILA <span
-                    class="text-zila-primary">PRESALE</span></a>
-            <!-- Mobile Button -->
-            <button class="md:hidden text-white text-3xl"
-                onclick="document.getElementById('mobileMenu').classList.toggle('hidden')">
-                ☰
-            </button>
-            <!-- Desktop Menu -->
-            <div class="hidden md:flex space-x-6 text-lg">
-                <a href="#presale" class="text-zila-primary font-bold">Presale</a>
-                <a href="#tokenomics" class="text-white hover:text-zila-primary">Tokenomics</a>
-                <a href="#features" class="text-white hover:text-zila-primary">Features</a>
-                <a href="" target="_blank" class="text-white hover:text-zila-primary">Contract</a>
-            </div>
-        </div>
-        <!-- MOBILE MENU -->
-        <div id="mobileMenu" class="hidden md:hidden bg-black/95 px-6 py-4 space-y-4 text-center">
-            <a class="block text-zila-primary font-bold" href="#presale">Presale</a>
-            <a class="block text-white" href="#tokenomics">Tokenomics</a>
-            <a class="block text-white" href="#features">Features</a>
-            <a class="block text-white" href="" target="_blank">Contract</a>
-        </div>
-    </nav>
-    <!-- MAIN PRESALE SECTION (SAME BACKGROUND AS DASHBOARD HOME) -->
-    <section id="presale" class="section-bg" style="background-image:url('godzilaai.png');">
-        <div class="section-overlay"></div>
-        <div class="section-content">
-            <div class="text-center mb-10">
-                <img src="godzilaa.png" alt="ZILA Token" class="token-circle mb-6">
-                <h1 class="text-5xl font-bold mb-3">ZILA TOKEN <span class="text-zila-primary">PRESALE</span></h1>
-                <p class="text-xl opacity-90 mb-6">Get Early Access to Next-Gen Dark AI & DeFi on Polygon</p>
-                <span class="inline-block bg-zila-primary/20 px-5 py-2 rounded-full border border-zila-primary mb-8">
-                    Presale Status: <span class="text-zila-primary font-bold">ACTIVE</span> | Ends in: 14d 08h 32m
-                </span>
-            </div>
-            <!-- PRESALE DASHBOARD CARD -->
-            <div class="presale-card p-8 mb-12">
-                <div class="grid md:grid-cols-3 gap-6 mb-8">
-                    <div class="text-center">
-                        <h3 class="text-lg opacity-80 mb-2">Total Raised</h3>
-                        <p class="text-3xl font-bold text-zila-primary">125.4 ETH</p>
-                        <p class="text-sm opacity-70">of 500 ETH Goal</p>
-                        <div class="w-full h-2 bg-white/10 rounded-full mt-2">
-                            <div class="h-full bg-zila-primary rounded-full" style="width: 25%"></div>
-                        </div>
-                    </div>
-                    <div class="text-center">
-                        <h3 class="text-lg opacity-80 mb-2">Tokens Sold</h3>
-                        <p class="text-3xl font-bold text-zila-primary">50,160,000 ZILA</p>
-                        <p class="text-sm opacity-70">of 200,000,000 ZILA Allocated</p>
-                    </div>
-                    <div class="text-center">
-                        <h3 class="text-lg opacity-80 mb-2">Price per ZILA</h3>
-                        <p class="text-3xl font-bold text-zila-primary">0.0000025 ETH</p>
-                        <p class="text-sm opacity-70">1 ETH = 400,000 ZILA</p>
-                    </div>
-                </div>
-                <!-- PURCHASE FORM -->
-                <div class="bg-black/50 p-6 rounded-lg border border-zila-primary/30">
-                    <h3 class="text-2xl font-bold mb-4 text-center">Buy ZILA Tokens</h3>
-                    <div class="flex flex-col md:flex-row gap-4 mb-6">
-                        <div class="flex-1">
-                            <label class="block text-sm opacity-80 mb-2">Enter ETH Amount</label>
-                            <input type="number" step="0.01" min="0.1" placeholder="0.00"
-                                class="w-full bg-white/10 border border-zila-primary/40 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-zila-primary">
-                        </div>
-                        <div class="flex-1">
-                            <label class="block text-sm opacity-80 mb-2">ZILA Received</label>
-                            <input type="text" readonly placeholder="0.00"
-                                class="w-full bg-white/5 border border-zila-primary/20 rounded-lg px-4 py-3 text-white cursor-not-allowed">
-                        </div>
-                    </div>
-                    <div class="text-center">
-                        <button
-                            class="bg-zila-primary hover:bg-zila-primary/80 text-white px-8 py-3 rounded-full text-xl font-bold w-full md:w-auto transition 0.3s shadow-lg shadow-zila-primary/20">
-                            <i class="fa fa-exchange mr-2"></i> Connect Wallet & Buy
-                        </button>
-                        <p class="text-sm opacity-70 mt-3">Supported Wallets: MetaMask, Trust Wallet, Coinbase Wallet</p>
-                    </div>
-                </div>
-            </div>
+<body class="bg-black text-white">
 
-            <!-- TOKENOMICS SECTION (SAME AS DASHBOARD) -->
-            <div id="tokenomics" class="mb-12">
-                <h2 class="text-4xl font-bold mb-6 text-center">TOKENOMICS</h2>
-                <img src="kontenbro.jpg" alt="Tokenomics Pie Chart" class="tokenomics-image mb-6">
+<!-- ===================== PRESALE ===================== -->
+<section class="min-h-screen flex items-center justify-center">
+<div class="max-w-6xl w-full p-6">
 
-                <div class="grid md:grid-cols-4 gap-4 mt-8">
-                    <div class="feature-card p-4">
-                        <h3 class="text-xl text-zila-primary mb-2">Total Supply</h3>
-                        <p class="text-2xl font-bold">1,000,000,000</p>
-                    </div>
-                    <div class="feature-card p-4">
-                        <h3 class="text-xl text-zila-primary mb-2">Presale Allocation</h3>
-                        <p class="text-2xl font-bold">20%</p>
-                    </div>
-                    <div class="feature-card p-4">
-                        <h3 class="text-xl text-zila-primary mb-2">Liquidity (Locked)</h3>
-                        <p class="text-2xl font-bold">10%</p>
-                    </div>
-                    <div class="feature-card p-4">
-                        <h3 class="text-xl text-zila-primary mb-2">Team (Locked)</h3>
-                        <p class="text-2xl font-bold">5% (2Y)</p>
-                    </div>
-                </div>
-            </div>
+<h1 class="text-4xl font-bold text-center mb-8">
+ZILA TOKEN <span class="text-zila-primary">PRESALE</span>
+</h1>
 
-            <!-- ZILA TOKEN FEATURES/ADVANTAGES -->
-            <div id="features">
-                <h2 class="text-4xl font-bold mb-6 text-center">Why Choose ZILA?</h2>
-                <div class="grid md:grid-cols-3 gap-6">
-                    <div class="feature-card p-6">
-                        <div
-                            class="w-12 h-12 bg-zila-primary/20 rounded-full flex items-center justify-center mb-4">
-                            <i class="fa fa-brain text-2xl text-zila-primary"></i>
-                        </div>
-                        <h3 class="text-2xl font-bold mb-2">Dark AI Integration</h3>
-                        <p class="opacity-80">Powered by advanced Dark AI for automated DeFi strategies, risk management, and
-                            smart contract optimization.</p>
-                    </div>
-                    <div class="feature-card p-6">
-                        <div
-                            class="w-12 h-12 bg-zila-primary/20 rounded-full flex items-center justify-center mb-4">
-                            <i class="fa fa-polygon text-2xl text-zila-primary"></i>
-                        </div>
-                        <h3 class="text-2xl font-bold mb-2">Polygon-Powered</h3>
-                        <p class="opacity-80">Low gas fees, fast transactions, and seamless integration with Polygon's DeFi
-                            ecosystem and dApps.</p>
-                    </div>
-                    <div class="feature-card p-6">
-                        <div
-                            class="w-12 h-12 bg-zila-primary/20 rounded-full flex items-center justify-center mb-4">
-                            <i class="fa fa-lock text-2xl text-zila-primary"></i>
-                        </div>
-                        <h3 class="text-2xl font-bold mb-2">Secure & Transparent</h3>
-                        <p class="opacity-80">Audited smart contract, locked liquidity, and transparent team vesting to ensure
-                            long-term trust.</p>
-                    </div>
-                    <div class="feature-card p-6">
-                        <div
-                            class="w-12 h-12 bg-zila-primary/20 rounded-full flex items-center justify-center mb-4">
-                            <i class="fa fa-trophy text-2xl text-zila-primary"></i>
-                        </div>
-                        <h3 class="text-2xl font-bold mb-2">High Staking Rewards</h3>
-                        <p class="opacity-80">40% token allocation for staking programs with competitive APY to reward
-                            long-term holders.</p>
-                    </div>
-                    <div class="feature-card p-6">
-                        <div
-                            class="w-12 h-12 bg-zila-primary/20 rounded-full flex items-center justify-center mb-4">
-                            <i class="fa fa-handshake-o text-2xl text-zila-primary"></i>
-                        </div>
-                        <h3 class="text-2xl font-bold mb-2">Strong Ecosystem</h3>
-                        <p class="opacity-80">20% token allocation for partnerships, dApp integrations, and ecosystem growth
-                            to drive adoption.</p>
-                    </div>
-                    <div class="feature-card p-6">
-                        <div
-                            class="w-12 h-12 bg-zila-primary/20 rounded-full flex items-center justify-center mb-4">
-                            <i class="fa fa-users text-2xl text-zila-primary"></i>
-                        </div>
-                        <h3 class="text-2xl font-bold mb-2">Community Driven</h3>
-                        <p class="opacity-80">Active community involvement in project governance and future development
-                            decisions.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- FOOTER -->
-    <footer class="bg-zila-dark py-12 text-center">
-        <p class="text-white opacity-70">
-            &copy; 2024 ZILA Token. All rights reserved. |
-            <a href="#" class="text-zila-primary hover:underline">Terms of Service</a> |
-            <a href="#" class="text-zila-primary hover:underline">Privacy Policy</a>
-        </p>
-        <div class="flex justify-center mt-6">
-            <a href="#" class="social-icon mx-3"><i class="fa fa-twitter"></i></a>
-            <a href="#" class="social-icon mx-3"><i class="fa fa-telegram"></i></a>
-            <a href="#" class="social-icon mx-3"><i class="fa fa-discord"></i></a>
-        </div>
-    </footer>
+<!-- ===================== TRADINGVIEW CHART ===================== -->
+<div class="mb-12">
+<h2 class="text-2xl font-bold mb-4 text-center">Polygon (MATIC) Live Price</h2>
+
+<div class="rounded-xl overflow-hidden border border-zila-primary">
+<div class="tradingview-widget-container">
+<div id="tradingview_matic"></div>
+<script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+<script>
+new TradingView.widget({
+"container_id": "tradingview_matic",
+"symbol": "BINANCE:MATICUSDT",
+"interval": "15",
+"timezone": "Etc/UTC",
+"theme": "dark",
+"style": "1",
+"locale": "en",
+"toolbar_bg": "#000000",
+"enable_publishing": false,
+"hide_top_toolbar": true,
+"save_image": false,
+"height": 420
+});
+</script>
+</div>
+</div>
+</div>
+
+<!-- ===================== BUY CARD ===================== -->
+<div class="bg-black/70 border border-zila-primary rounded-xl p-6 mb-12">
+
+<div class="mb-4">
+<label>Amount (ETH)</label>
+<input id="ethAmount" type="number" class="w-full p-3 bg-black border border-zila-primary rounded">
+</div>
+
+<button onclick="connectWallet()" id="walletBtn"
+class="w-full bg-zila-primary py-3 rounded font-bold mb-3">
+Connect Wallet
+</button>
+
+<button onclick="buyToken()"
+class="w-full bg-green-500 py-3 rounded font-bold">
+Buy Token
+</button>
+
+<p id="walletAddress" class="text-sm mt-3 opacity-70 text-center"></p>
+</div>
+
+<!-- ===================== PARTNERSHIP ===================== -->
+<div class="mb-16">
+<h2 class="text-3xl font-bold text-center mb-8">Our Partnerships</h2>
+
+<div class="grid grid-cols-2 md:grid-cols-5 gap-6">
+<div class="partner-logo"><img src="partner1.png" class="mx-auto"></div>
+<div class="partner-logo"><img src="partner2.png" class="mx-auto"></div>
+<div class="partner-logo"><img src="partner3.png" class="mx-auto"></div>
+<div class="partner-logo"><img src="partner4.png" class="mx-auto"></div>
+<div class="partner-logo"><img src="partner5.png" class="mx-auto"></div>
+</div>
+</div>
+
+</div>
+</section>
+
+<!-- ===================== WALLET SCRIPT ===================== -->
+<script>
+let provider;
+let signer;
+let userAddress;
+
+// GANTI DENGAN CONTRACT KAMU
+const CONTRACT_ADDRESS = "0xYOUR_CONTRACT_ADDRESS";
+const ABI = [
+"function buyToken() payable"
+];
+
+async function connectWallet(){
+if(window.ethereum){
+provider = new ethers.providers.Web3Provider(window.ethereum);
+await provider.send("eth_requestAccounts", []);
+signer = provider.getSigner();
+userAddress = await signer.getAddress();
+document.getElementById("walletAddress").innerText =
+"Connected: " + userAddress.slice(0,6) + "..." + userAddress.slice(-4);
+document.getElementById("walletBtn").innerText = "Wallet Connected";
+}else{
+alert("Please install MetaMask");
+}
+}
+
+async function buyToken(){
+if(!signer){
+alert("Connect wallet first");
+return;
+}
+const ethAmount = document.getElementById("ethAmount").value;
+const contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
+await contract.buyToken({
+value: ethers.utils.parseEther(ethAmount)
+});
+}
+</script>
+
 </body>
-
 </html>
