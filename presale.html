@@ -8,6 +8,8 @@
     <link href="" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- ETHERS JS (Polygon Compatible) -->
+<script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.min.js"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -203,6 +205,36 @@
                     Presale Status: <span class="text-zila-primary font-bold">ACTIVE</span> | Ends in: 14d 08h 32m
                 </span>
             </div>
+            <!-- POLYGON LIVE PRICE CHART -->
+<div class="presale-card p-6 mb-12">
+    <h3 class="text-2xl font-bold text-center mb-4">
+        Polygon (MATIC) Live Price
+    </h3>
+
+    <div class="rounded-xl overflow-hidden border border-zila-primary">
+        <div class="tradingview-widget-container">
+            <div id="tradingview_matic"></div>
+        </div>
+    </div>
+</div>
+
+<script src="https://s3.tradingview.com/tv.js"></script>
+<script>
+new TradingView.widget({
+    "container_id": "tradingview_matic",
+    "symbol": "BINANCE:MATICUSDT",
+    "interval": "15",
+    "timezone": "Etc/UTC",
+    "theme": "dark",
+    "style": "1",
+    "locale": "en",
+    "toolbar_bg": "#000",
+    "enable_publishing": false,
+    "hide_top_toolbar": true,
+    "save_image": false,
+    "height": 420
+});
+</script>
             <!-- PRESALE DASHBOARD CARD -->
             <div class="presale-card p-8 mb-12">
                 <div class="grid md:grid-cols-3 gap-6 mb-8">
@@ -241,10 +273,17 @@
                         </div>
                     </div>
                     <div class="text-center">
-                        <button
-                            class="bg-zila-primary hover:bg-zila-primary/80 text-white px-8 py-3 rounded-full text-xl font-bold w-full md:w-auto transition 0.3s shadow-lg shadow-zila-primary/20">
-                            <i class="fa fa-exchange mr-2"></i> Connect Wallet & Buy
-                        </button>
+                        <button onclick="connectWallet()"
+class="bg-zila-primary hover:bg-zila-primary/80 text-white px-8 py-3 rounded-full text-xl font-bold w-full md:w-auto">
+<i class="fa fa-wallet mr-2"></i> Connect Wallet
+</button>
+
+<button onclick="buyToken()"
+class="mt-4 bg-green-500 hover:bg-green-600 text-white px-8 py-3 rounded-full text-xl font-bold w-full md:w-auto">
+<i class="fa fa-shopping-cart mr-2"></i> Buy with MATIC
+</button>
+
+<p id="walletAddress" class="text-sm mt-3 opacity-70 text-center"></p>
                         <p class="text-sm opacity-70 mt-3">Supported Wallets: MetaMask, Trust Wallet, Coinbase Wallet</p>
                     </div>
                 </div>
@@ -337,6 +376,30 @@
             </div>
         </div>
     </section>
+    
+    <!-- PARTNERSHIP -->
+<section class="py-20 bg-black">
+    <h2 class="text-4xl font-bold text-center mb-10">Our Partnerships</h2>
+
+    <div class="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-5 gap-6 px-6">
+        <div class="feature-card p-6 flex items-center justify-center">
+            <img src="partner1.png" class="max-h-12">
+        </div>
+        <div class="feature-card p-6 flex items-center justify-center">
+            <img src="partner2.png" class="max-h-12">
+        </div>
+        <div class="feature-card p-6 flex items-center justify-center">
+            <img src="partner3.png" class="max-h-12">
+        </div>
+        <div class="feature-card p-6 flex items-center justify-center">
+            <img src="partner4.png" class="max-h-12">
+        </div>
+        <div class="feature-card p-6 flex items-center justify-center">
+            <img src="partner5.png" class="max-h-12">
+        </div>
+    </div>
+</section>
+    
     <!-- FOOTER -->
     <footer class="bg-zila-dark py-12 text-center">
         <p class="text-white opacity-70">
@@ -350,6 +413,56 @@
             <a href="#" class="social-icon mx-3"><i class="fa fa-discord"></i></a>
         </div>
     </footer>
+    <script>
+let provider, signer, userAddress;
+
+// GANTI DENGAN SMART CONTRACT PRESALE KAMU
+const CONTRACT_ADDRESS = "0xYOUR_POLYGON_CONTRACT";
+const ABI = [
+    "function buyToken() payable"
+];
+
+// AUTO CONNECT POLYGON
+async function connectWallet(){
+    if (!window.ethereum) {
+        alert("Please install MetaMask");
+        return;
+    }
+
+    provider = new ethers.providers.Web3Provider(window.ethereum);
+    await provider.send("eth_requestAccounts", []);
+    signer = provider.getSigner();
+    userAddress = await signer.getAddress();
+
+    // Auto switch ke Polygon
+    await window.ethereum.request({
+        method: "wallet_switchEthereumChain",
+        params: [{ chainId: "0x89" }] // Polygon Mainnet
+    });
+
+    document.getElementById("walletAddress").innerText =
+        "Connected: " + userAddress.slice(0,6) + "..." + userAddress.slice(-4);
+}
+
+// BUY TOKEN WITH MATIC
+async function buyToken(){
+    if (!signer) {
+        alert("Connect wallet first");
+        return;
+    }
+
+    const amount = document.querySelector('input[type="number"]').value;
+    if (!amount || amount <= 0) {
+        alert("Enter MATIC amount");
+        return;
+    }
+
+    const contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
+    await contract.buyToken({
+        value: ethers.utils.parseEther(amount)
+    });
+}
+    </script>
 </body>
 
                           </html>
