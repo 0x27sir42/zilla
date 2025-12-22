@@ -212,32 +212,9 @@ window.WalletConnectProvider = WalletConnectProvider;
                 <img src="godzilaa.png" alt="ZILA Token" class="token-circle mb-6">
                 <h1 class="text-5xl font-bold mb-3">ZILA TOKEN <span class="text-zila-primary">PRESALE</span></h1>
                 <p class="text-xl opacity-90 mb-6">Get Early Access to Next-Gen Dark AI & DeFi on Polygon</p>
-                <script>
-    // SET TANGGAL AKHIR PRESALE
-    const presaleEndDate = new Date("2025-12-31T23:59:59Z").getTime();
-
-    function updateCountdown() {
-        const now = new Date().getTime();
-        const distance = presaleEndDate - now;
-
-        if (distance < 0) {
-            document.getElementById("countdown").innerHTML = "Presale Ended";
-            clearInterval(countdownInterval);
-            return;
-        }
-
-        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-        document.getElementById("countdown").innerHTML =
-            `${days}d ${hours}h ${minutes}m ${seconds}s`;
-    }
-
-    const countdownInterval = setInterval(updateCountdown, 1000);
-    updateCountdown();
-                </script>
+                <span id="countdown" class="inline-block bg-zila-primary/20 px-5 py-2 rounded-full border border-zila-primary mb-8">
+    Loading...
+                </span>
             </div>
             <!-- POLYGON LIVE PRICE CHART -->
 <div class="presale-card p-6 mb-12">
@@ -269,6 +246,32 @@ new TradingView.widget({
     "height": 420
 });
 </script>
+            <script>
+    // SET TANGGAL AKHIR PRESALE
+    const presaleEndDate = new Date("2026-05-31T23:59:59Z").getTime();
+
+    function updateCountdown() {
+        const now = new Date().getTime();
+        const distance = presaleEndDate - now;
+
+        if (distance < 0) {
+            document.getElementById("countdown").innerHTML = "Presale Ended";
+            clearInterval(countdownInterval);
+            return;
+        }
+
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        document.getElementById("countdown").innerHTML =
+            `${days}d ${hours}h ${minutes}m ${seconds}s`;
+    }
+
+    const countdownInterval = setInterval(updateCountdown, 1000);
+    updateCountdown();
+            </script>
             <!-- PRESALE DASHBOARD CARD -->
             <div class="presale-card p-8 mb-12">
                 <div class="grid md:grid-cols-3 gap-6 mb-8">
