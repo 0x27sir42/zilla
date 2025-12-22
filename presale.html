@@ -8,41 +8,13 @@
     <link href="" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- ETHERS JS (Polygon Compatible) -->
-    <!-- 1. Ethers.js -->
-<script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.min.js"></script>
 
-<!-- 2. WalletConnect v2 UMD -->
-<script src="https://cdn.jsdelivr.net/npm/@walletconnect/web3-provider@2.11.0/dist/umd/index.min.js"></script>
+    <script src="https://unpkg.com/@walletconnect/web3-provider@2.11.0/dist/umd/index.min.js"></script>
 
-<!-- 3. Kode connectWallet -->
-<script>
-let provider, signer, userAddress;
-
-async function connectWallet() {
-    try {
-        const wcProvider = new WalletConnectProvider.default({
-            projectId: "YOUR_PROJECT_ID",
-            chains: [137],
-            rpcMap: { 137: "https://polygon-rpc.com" }
-        });
-
-        await wcProvider.enable();
-
-        provider = new ethers.providers.Web3Provider(wcProvider);
-        signer = provider.getSigner();
-        userAddress = await signer.getAddress();
-
-        document.getElementById("walletAddress").innerText =
-            "Connected: " + userAddress.slice(0,6) + "..." + userAddress.slice(-4);
-
-    } catch (err) {
-        console.error(err);
-        alert("Wallet connection failed: " + err.message);
-    }
-}
-</script>
+    <!-- WalletConnect v2 -->
+    <script src="https://unpkg.com/@walletconnect/web3-provider@2.11.0/dist/umd/index.min.js"></script>
     
+    <!-- Konfigurasi Tailwind -->
     <script>
         tailwind.config = {
             theme: {
@@ -470,49 +442,32 @@ const ABI = [
     "function buyToken() payable"
 ];
 
+        <script>
+let provider, signer, userAddress;
 
-// BUY TOKEN
-async function buyToken() {
-    if (!signer) {
-        alert("Connect wallet first");
-        return;
+async function connectWallet() {
+    try {
+        const wcProvider = new WalletConnectProvider.default({
+            projectId: "YOUR_PROJECT_ID",
+            chains: [137],
+            rpcMap: { 137: "https://polygon-rpc.com" }
+        });
+
+        await wcProvider.enable();
+
+        provider = new ethers.providers.Web3Provider(wcProvider);
+        signer = provider.getSigner();
+        userAddress = await signer.getAddress();
+
+        document.getElementById("walletAddress").innerText =
+            "Connected: " + userAddress.slice(0,6) + "..." + userAddress.slice(-4);
+
+    } catch (err) {
+        console.error(err);
+        alert("Wallet connection failed: " + err.message);
     }
-
-    const matic = document.getElementById("maticAmount").value;
-
-    if (!matic || matic <= 0) {
-        alert("Enter MATIC amount");
-        return;
-    }
-
-    const contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
-
-    await contract.buyToken({
-        value: ethers.utils.parseEther(matic)
-    });
 }
-
-// HITUNG ZILA REALTIME (UI)
-const ZILA_RATE = 1800;
-
-function calculateZila() {
-    const matic = document.getElementById("maticAmount").value;
-    const zila = document.getElementById("zilaReceived");
-
-    if (!matic || matic <= 0) {
-        zila.value = 0;
-        return;
-    }
-
-    zila.value = (matic * ZILA_RATE).toLocaleString();
-}
-            </script>
-
-    <script type="module">
-import WalletConnectProvider from "@walletconnect/web3-provider";
-
-window.WalletConnectProvider = WalletConnectProvider;
-    </script>
+</script>
 </body>
 
                           </html>
