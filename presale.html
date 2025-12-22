@@ -159,6 +159,8 @@
             }, 1200);
         }
     </script>
+    <!-- Tambahkan WalletConnect script di head -->
+<script src="https://unpkg.com/@walletconnect/web3-provider@1.8.0/dist/umd/index.min.js"></script>
 </head>
 
 <body class="bg-black font-sans">
@@ -290,7 +292,7 @@ class="bg-zila-primary hover:bg-zila-primary/80 text-white px-8 py-3 rounded-ful
 
 <button onclick="buyToken()"
 class="mt-4 bg-green-500 hover:bg-green-600 text-white px-8 py-3 rounded-full text-xl font-bold w-full md:w-auto">
-<i class="fa fa-shopping-cart mr-2"></i> Buy with ZILA
+<i class="fa fa-shopping-cart mr-2"></i> Buy with POL
 </button>
 
 <p id="walletAddress" class="text-sm mt-3 opacity-70 text-center"></p>
@@ -431,59 +433,30 @@ const ABI = [
     "function buyToken() payable"
 ];
 
-// CONNECT WALLET + SWITCH POLYGON (AMAN)
+// CONNECT WALLET UNTUK SEMUA WALLET (MetaMask, Trust, Coinbase)
 async function connectWallet() {
-    if (!window.ethereum) {
-        alert("MetaMask not found");
-        return;
-    }
-
     try {
-        await window.ethereum.request({ method: "eth_requestAccounts" });
+        const wcProvider = new WalletConnectProvider.default({
+            rpc: {
+                137: "https://polygon-rpc.com"
+            }
+        });
 
-        provider = new ethers.providers.Web3Provider(window.ethereum);
+        // enable wallet (popup QR code jika mobile)
+        await wcProvider.enable();
+
+        provider = new ethers.providers.Web3Provider(wcProvider);
         signer = provider.getSigner();
         userAddress = await signer.getAddress();
 
-        const network = await provider.getNetwork();
-
-        if (network.chainId !== 137) {
-            try {
-                await window.ethereum.request({
-                    method: "wallet_switchEthereumChain",
-                    params: [{ chainId: "0x89" }]
-                });
-            } catch (err) {
-                if (err.code === 4902) {
-                    await window.ethereum.request({
-                        method: "wallet_addEthereumChain",
-                        params: [{
-                            chainId: "0x89",
-                            chainName: "Polygon Mainnet",
-                            rpcUrls: ["https://polygon-rpc.com"],
-                            nativeCurrency: {
-                                name: "MATIC",
-                                symbol: "MATIC",
-                                decimals: 18
-                            },
-                            blockExplorerUrls: ["https://polygonscan.com"]
-                        }]
-                    });
-                } else {
-                    throw err;
-                }
-            }
-        }
-
         document.getElementById("walletAddress").innerText =
-            "Connected: " + userAddress.slice(0, 6) + "..." + userAddress.slice(-4);
+            "Connected: " + userAddress.slice(0,6) + "..." + userAddress.slice(-4);
 
     } catch (error) {
         console.error(error);
         alert("Wallet connection rejected");
     }
 }
-
 // BUY TOKEN
 async function buyToken() {
     if (!signer) {
