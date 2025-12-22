@@ -299,9 +299,9 @@ class="bg-zila-primary hover:bg-zila-primary/80 text-white px-8 py-3 rounded-ful
 <i class="fa fa-wallet mr-2"></i> Connect Wallet
 </button>
 
-<button onclick="buyToken()"
-class="mt-4 bg-green-500 hover:bg-green-600 text-white px-8 py-3 rounded-full text-xl font-bold w-full md:w-auto">
-<i class="fa fa-shopping-cart mr-2"></i> Buy with POL
+<button onclick="buyZila()"
+class="bg-zila-primary hover:bg-zila-primary/80 text-white px-8 py-3 rounded-full text-xl font-bold w-full md:w-auto transition shadow-lg">
+<i class="fa fa-wallet mr-2"></i> Connect Wallet & Buy
 </button>
 
 <p id="walletAddress" class="text-sm mt-3 opacity-70 text-center"></p>
@@ -434,40 +434,118 @@ class="mt-4 bg-green-500 hover:bg-green-600 text-white px-8 py-3 rounded-full te
             <a href="#" class="social-icon mx-3"><i class="fa fa-discord"></i></a>
         </div>
     </footer>
+    
     <script>
-let provider, signer, userAddress;
+let userAccount = null;
+const ZILA_RATE = 1800;
 
-const CONTRACT_ADDRESS = "0xYOUR_POLYGON_CONTRACT";
-const ABI = [
-    "function buyToken() payable"
-];
+// GANTI DENGAN CONTRACT KAMU
+const PRESALE_CONTRACT = "0xYOUR_PRESALE_CONTRACT";
 
-        <script>
-let provider, signer, userAddress;
+// Polygon Mainnet
+const polygonParams = {
+    chainId: "0x89",
+    chainName: "Polygon Mainnet",
+    nativeCurrency: {
+        name: "MATIC",
+        symbol: "MATIC",
+        decimals: 18
+    },
+    rpcUrls: ["https://polygon-rpc.com/"],
+    blockExplorerUrls: ["https://polygonscan.com/"]
+};
 
+// CONNECT WALLET
 async function connectWallet() {
+    if (!window.ethereum) {
+        alert("MetaMask not detected!");
+        return;
+    }
+
     try {
-        const wcProvider = new WalletConnectProvider.default({
-            projectId: "YOUR_PROJECT_ID",
-            chains: [137],
-            rpcMap: { 137: "https://polygon-rpc.com" }
+        const accounts = await ethereum.request({ method: "eth_requestAccounts" });
+        userAccount = accounts[0];
+
+        await ethereum.request({
+            method: "wallet_switchEthereumChain",
+            params: [{ chainId: polygonParams.chainId }]
         });
 
-        await wcProvider.enable();
-
-        provider = new ethers.providers.Web3Provider(wcProvider);
-        signer = provider.getSigner();
-        userAddress = await signer.getAddress();
-
-        document.getElementById("walletAddress").innerText =
-            "Connected: " + userAddress.slice(0,6) + "..." + userAddress.slice(-4);
-
+        alert("Wallet Connected: " + userAccount.slice(0,6) + "...");
     } catch (err) {
-        console.error(err);
-        alert("Wallet connection failed: " + err.message);
+        if (err.code === 4902) {
+            await ethereum.request({
+                method: "wallet_addEthereumChain",
+                params: [polygonParams]
+            });
+        } else {
+            console.error(err);
+        }
     }
 }
-</script>
+
+// BUY TOKEN
+async function buyZila() {
+    if (!userAccount) {
+        await connectWallet();
+    }
+
+    const maticAmount = document.getElementById("maticAmount").value;
+    if (!maticAmount || maticAmount <= 0) {
+        alert("Enter MATIC amount");
+        return;
+    }
+
+    const valueWei = (maticAmount * 1e18).toString(16);
+
+    try {
+        await ethereum.request({
+            method: "eth_sendTransaction",
+            params: [{
+                from: userAccount,
+                to: PRESALE_CONTRACT,
+                value: "0x" + valueWei
+            }]
+        });
+
+        alert("Transaction sent! 🎉");
+    } catch (err) {
+        console.error(err);
+        alert("Transaction failed");
+    }
+}
+
+// HITUNG ZILA REALTIME
+function calculateZila() {
+    const matic = document.getElementById("maticAmount").value;
+    const zilaField = document.getElementById("zilaReceived");
+
+    if (!matic || matic <= 0) {
+        zilaField.value = 0;
+        return;
+    }
+
+    zilaField.value = (matic * ZILA_RATE).toLocaleString();
+}
+        </script>
+
+    <script>
+const ZILA_RATE = 1800; // 1 MATIC = 1800 ZILA
+
+function calculateZila() {
+    const matic = document.getElementById("maticAmount").value;
+    const zilaField = document.getElementById("zilaReceived");
+
+    if (!matic || matic <= 0) {
+        zilaField.value = 0;
+        return;
+    }
+
+    const zila = matic * ZILA_RATE;
+    zilaField.value = zila.toLocaleString();
+}
+    </script>
+    
 </body>
 
                           </html>
