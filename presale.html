@@ -160,7 +160,11 @@
         }
     </script>
     <!-- Tambahkan WalletConnect script di head -->
-<script src="https://unpkg.com/@walletconnect/web3-provider@1.8.0/dist/umd/index.min.js"></script>
+<script type="module">
+import WalletConnectProvider from "@walletconnect/web3-provider";
+
+window.WalletConnectProvider = WalletConnectProvider;
+</script>
 </head>
 
 <body class="bg-black font-sans">
@@ -436,13 +440,16 @@ const ABI = [
 // CONNECT WALLET UNTUK SEMUA WALLET (MetaMask, Trust, Coinbase)
 async function connectWallet() {
     try {
+        // buat provider WalletConnect v2
         const wcProvider = new WalletConnectProvider.default({
-            rpc: {
+            projectId: "YOUR_PROJECT_ID", // wajib untuk v2, bisa dapat dari walletconnect.com
+            chains: [137], // Polygon
+            rpcMap: {
                 137: "https://polygon-rpc.com"
             }
         });
 
-        // enable wallet (popup QR code jika mobile)
+        // enable wallet
         await wcProvider.enable();
 
         provider = new ethers.providers.Web3Provider(wcProvider);
@@ -454,7 +461,7 @@ async function connectWallet() {
 
     } catch (error) {
         console.error(error);
-        alert("Wallet connection rejected");
+        alert("Wallet connection failed: " + error.message);
     }
 }
 // BUY TOKEN
