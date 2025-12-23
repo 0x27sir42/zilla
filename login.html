@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login - ZILA</title>
+<link href="style.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="hero">
+  <div class="overlay"></div>
+  <div class="center-panel">
+    <h1 class="title">Login</h1>
+    <p class="lead">Enter your credentials</p>
+    <form id="loginForm" class="actions">
+      <input type="email" id="email" placeholder="Email" required class="btn-ghost" style="width:100%; margin-bottom:12px;">
+      <input type="password" id="password" placeholder="Password" required class="btn-ghost" style="width:100%; margin-bottom:12px;">
+      <button type="submit" class="btn-primary">Login</button>
+    </form>
+    <p class="cta-note">Forgot password? <a href="reset.html">Reset</a></p>
+  </div>
+</div>
+
+<script>
+const form = document.getElementById('loginForm');
+form.addEventListener('submit', async e => {
+  e.preventDefault();
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
+
+  const res = await fetch('https://YOUR_CLOUDFLARE_WORKER_URL/login', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({email, password})
+  });
+
+  const data = await res.json();
+  if(data.success){
+    window.location.href = 'dashboard.html';
+  } else {
+    alert(data.message);
+  }
+});
+</script>
+
+</body>
+</html>
