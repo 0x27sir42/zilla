@@ -134,6 +134,52 @@
             height: auto;
             display: block;
         }
+
+        /* ===================== ECOSYSTEM SLIDER ===================== */
+.ecosystem-slider {
+    display: flex;
+    gap: 1.5rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding: 1rem;
+}
+
+.ecosystem-slider::-webkit-scrollbar {
+    height: 8px;
+}
+
+.ecosystem-slider::-webkit-scrollbar-thumb {
+    background: #6C63FF;
+    border-radius: 10px;
+}
+
+.ecosystem-item {
+    min-width: 280px;
+    scroll-snap-align: start;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(108,99,255,0.4);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: 0.3s;
+}
+
+.ecosystem-item:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(108,99,255,0.6);
+}
+
+.ecosystem-item img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.ecosystem-item h3 {
+    padding: 1rem;
+    font-size: 1.2rem;
+    text-align: center;
+    color: #fff;
+}
     </style>
 
     <script>
@@ -236,6 +282,79 @@
             <p class="text-sm opacity-80 mt-2">Watch the introductory video of ZILA Token and the technology behind it. </p>
         </div>
     </section>
+
+    <!-- ===================== ECOSYSTEM ===================== -->
+<section id="ecosystem" class="section-bg" style="background-image:url('ekosistem-bg.jpg');">
+    <div class="section-overlay"></div>
+    <div class="section-content">
+
+        <h2 class="text-4xl font-bold mb-6">ZILA Ecosystem</h2>
+        <p class="opacity-80 mb-8 max-w-2xl mx-auto">
+            Swipe to explore the ZILA ecosystem. Click each module to read detailed information.
+        </p>
+
+        <div class="ecosystem-slider">
+
+            <a href="blog-ai.html" class="ecosystem-item">
+                <img src="eco-ai.jpg" alt="ZILA AI">
+                <h3>ZILA AI Engine</h3>
+            </a>
+
+            <a href="blog-defi.html" class="ecosystem-item">
+                <img src="eco-defi.jpg" alt="ZILA DeFi">
+                <h3>ZILA DeFi Protocol</h3>
+            </a>
+
+            <a href="blog-staking.html" class="ecosystem-item">
+                <img src="eco-staking.jpg" alt="ZILA Staking">
+                <h3>ZILA Staking System</h3>
+            </a>
+
+            <a href="blog-nft.html" class="ecosystem-item">
+                <img src="eco-nft.jpg" alt="ZILA NFT">
+                <h3>ZILA NFT & GameFi</h3>
+            </a>
+
+        </div>
+    </div>
+</section>
+
+    <!-- ===================== PARTNERSHIP ===================== -->
+<section id="partnership" class="section-bg" style="background-image:url('partner-bg.jpg');">
+    <div class="section-overlay"></div>
+    <div class="section-content">
+
+        <h2 class="text-4xl font-bold mb-8">Partnership</h2>
+        <p class="opacity-80 mb-10">
+            Strategic partners supporting the growth of the ZILA ecosystem.
+        </p>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+
+            <div class="bg-white/10 p-6 rounded-xl backdrop-blur">
+                <img src="partner1.png" class="mx-auto h-16 mb-4" alt="Partner 1">
+                <p class="text-center">Blockchain Partner</p>
+            </div>
+
+            <div class="bg-white/10 p-6 rounded-xl backdrop-blur">
+                <img src="partner2.png" class="mx-auto h-16 mb-4" alt="Partner 2">
+                <p class="text-center">AI Technology Partner</p>
+            </div>
+
+            <div class="bg-white/10 p-6 rounded-xl backdrop-blur">
+                <img src="partner3.png" class="mx-auto h-16 mb-4" alt="Partner 3">
+                <p class="text-center">DeFi Partner</p>
+            </div>
+
+            <div class="bg-white/10 p-6 rounded-xl backdrop-blur">
+                <img src="partner4.png" class="mx-auto h-16 mb-4" alt="Partner 4">
+                <p class="text-center">Media Partner</p>
+            </div>
+
+        </div>
+
+    </div>
+</section>
 
     <!-- TOKENOMICS -->
     <section id="tokenomics" class="section-bg" style="background-image:url('janco.png');">
