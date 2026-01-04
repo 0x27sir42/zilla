@@ -256,6 +256,52 @@ img, video {
         url('loading-bg.jpg') center/cover no-repeat;
 }
         
+/* ===== 3D ECOSYSTEM EFFECT (ADD-ON ONLY) ===== */
+#ecosystem {
+    perspective: 1200px;
+    overflow: hidden;
+}
+
+/* Background 3D movement */
+#ecosystem::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: inherit;
+    background-size: cover;
+    background-position: center;
+    transform: scale(1.1);
+    transition: transform 0.2s ease-out;
+    z-index: 0;
+}
+
+/* Pastikan konten di atas */
+#ecosystem .section-content {
+    position: relative;
+    z-index: 2;
+}
+
+/* Slider 3D */
+.ecosystem-slider {
+    perspective: 1200px;
+}
+
+/* Card 3D */
+.ecosystem-item {
+    transform-style: preserve-3d;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+/* Hover desktop */
+.ecosystem-item:hover {
+    transform: rotateY(-12deg) rotateX(6deg) scale(1.05);
+}
+
+/* Aktif saat drag (mobile) */
+.ecosystem-item.active-3d {
+    transform: rotateY(15deg) rotateX(-6deg) scale(1.06);
+    }
+        
     </style>
 
     <script>
@@ -614,6 +660,33 @@ img, video {
 
     setFullHeight();
     window.addEventListener('resize', setFullHeight);
+    </script>
+    
+    <script>
+/* ===== ECOSYSTEM 3D INTERACTION ===== */
+const ecosystem = document.getElementById("ecosystem");
+const cards = document.querySelectorAll(".ecosystem-item");
+
+/* Background parallax (mouse / gyro feel) */
+document.addEventListener("mousemove", (e) => {
+    if (!ecosystem) return;
+
+    const x = (window.innerWidth / 2 - e.clientX) / 40;
+    const y = (window.innerHeight / 2 - e.clientY) / 40;
+
+    ecosystem.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
+});
+
+/* Touch swipe 3D (mobile) */
+cards.forEach(card => {
+    card.addEventListener("touchstart", () => {
+        card.classList.add("active-3d");
+    });
+
+    card.addEventListener("touchend", () => {
+        card.classList.remove("active-3d");
+    });
+});
     </script>
     
 </body>
