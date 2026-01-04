@@ -143,7 +143,11 @@
     scroll-snap-type: x mandatory;
     padding: 1rem;
 }
-
+        
+.section-bg {
+    min-height: calc(var(--vh, 1vh) * 100);
+}
+        
 .ecosystem-slider::-webkit-scrollbar {
     height: 8px;
 }
@@ -179,6 +183,43 @@
     font-size: 1.2rem;
     text-align: center;
     color: #fff;
+}
+        /* ===== FULL SCREEN FIX (MOBILE & DESKTOP) ===== */
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+/* Paksa semua section benar-benar full screen */
+.section-bg {
+    width: 100vw;
+    min-height: 100vh;
+    max-width: 100%;
+}
+
+/* Fix elemen yang kadang bikin layar geser ke kanan */
+* {
+    box-sizing: border-box;
+}
+
+/* Hilangkan ruang kosong di mobile */
+body {
+    position: relative;
+}
+
+/* Video full responsive */
+.zila-video-container {
+    width: 100%;
+    max-width: 100%;
+}
+
+/* Gambar jangan pernah keluar layar */
+img, video {
+    max-width: 100%;
+    height: auto;
 }
     </style>
 
@@ -487,6 +528,18 @@
         <p class="opacity-60 text-sm">© 2025 ZILA. All Rights Reserved.</p>
     </footer>
 
+    <script>
+    function setFullHeight() {
+        document.documentElement.style.setProperty(
+            '--vh',
+            window.innerHeight * 0.01 + 'px'
+        );
+    }
+
+    setFullHeight();
+    window.addEventListener('resize', setFullHeight);
+    </script>
+    
 </body>
 
 </html>
