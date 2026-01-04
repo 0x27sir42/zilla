@@ -221,6 +221,41 @@ img, video {
     max-width: 100%;
     height: auto;
 }
+        /* ===== TEAM AVATAR (100% PERFECT CIRCLE) ===== */
+.team-avatar {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    object-fit: cover;
+    aspect-ratio: 1 / 1;
+    border: 4px solid #6C63FF;
+    box-shadow: 0 0 20px rgba(108,99,255,0.7);
+    margin: 0 auto;
+}
+
+/* ===== TEAM CARD ===== */
+.team-card {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(108,99,255,0.4);
+    border-radius: 20px;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    backdrop-blur: 12px;
+    transition: 0.3s;
+}
+
+.team-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 0 30px rgba(108,99,255,0.6);
+}
+
+/* ===== LOADING SCREEN BACKGROUND IMAGE ===== */
+#loading-screen {
+    background: 
+        linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)),
+        url('loading-bg.jpg') center/cover no-repeat;
+}
+        
     </style>
 
     <script>
@@ -394,6 +429,47 @@ img, video {
 
         </div>
 
+    </div>
+</section>
+
+    <!-- ===================== TEAM ===================== -->
+<section id="team" class="section-bg" style="background-image:url('team-bg.jpg');">
+    <div class="section-overlay"></div>
+    <div class="section-content">
+
+        <h2 class="text-4xl font-bold mb-10">ZILA Core Team</h2>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 px-4">
+
+            <!-- CEO -->
+            <div class="team-card">
+                <img src="ceo.jpg" alt="CEO ZILA" class="team-avatar mb-4">
+                <h3 class="text-xl font-semibold">CEO</h3>
+                <p class="opacity-80">Founder & Vision Lead</p>
+            </div>
+
+            <!-- CMO -->
+            <div class="team-card">
+                <img src="cmo.jpg" alt="CMO ZILA" class="team-avatar mb-4">
+                <h3 class="text-xl font-semibold">CMO</h3>
+                <p class="opacity-80">Marketing Strategist</p>
+            </div>
+
+            <!-- MODERATOR -->
+            <div class="team-card">
+                <img src="moderator1.jpg" alt="Moderator ZILA" class="team-avatar mb-4">
+                <h3 class="text-xl font-semibold">Moderator</h3>
+                <p class="opacity-80">Community Support</p>
+            </div>
+
+            <!-- MODERATOR 2 -->
+            <div class="team-card">
+                <img src="moderator2.jpg" alt="Moderator ZILA" class="team-avatar mb-4">
+                <h3 class="text-xl font-semibold">Moderator</h3>
+                <p class="opacity-80">Global Community</p>
+            </div>
+
+        </div>
     </div>
 </section>
 
