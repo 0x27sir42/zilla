@@ -301,6 +301,47 @@ img, video {
 .ecosystem-item.active-3d {
     transform: rotateY(15deg) rotateX(-6deg) scale(1.06);
     }
+
+   /* ===== ECOSYSTEM HORIZONTAL SWIPE FIX ===== */
+
+/* Paksa slider benar-benar horizontal */
+.ecosystem-slider {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    cursor: grab;
+}
+
+/* Saat drag */
+.ecosystem-slider:active {
+    cursor: grabbing;
+}
+
+/* Card ecosystem */
+.ecosystem-item {
+    flex: 0 0 auto;
+    scroll-snap-align: center;
+}
+
+/* Hilangkan scrollbar di mobile (tetap bisa geser) */
+.ecosystem-slider::-webkit-scrollbar {
+    display: none;
+}
+
+/* Firefox */
+.ecosystem-slider {
+    scrollbar-width: none;
+}
+
+/* Extra ruang kanan-kiri biar geser enak */
+.ecosystem-slider::before,
+.ecosystem-slider::after {
+    content: "";
+    flex: 0 0 20px;
+}     
         
     </style>
 
