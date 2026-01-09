@@ -793,6 +793,71 @@ cards.forEach(card => {
     });
 });
     </script>
+
+  <script>
+/* ===== ECOSYSTEM SNAP SLIDER (ADD-ON ONLY) ===== */
+(() => {
+  const slider = document.querySelector('.ecosystem-slider');
+  if (!slider) return;
+
+  const cards = slider.querySelectorAll('.ecosystem-item');
+  let isDown = false;
+  let startX;
+  let scrollLeft;
+
+  slider.style.scrollSnapType = 'x mandatory';
+
+  slider.addEventListener('mousedown', (e) => {
+    isDown = true;
+    startX = e.pageX - slider.offsetLeft;
+    scrollLeft = slider.scrollLeft;
+    slider.classList.add('dragging');
+  });
+
+  slider.addEventListener('mouseleave', () => isDown = false);
+  slider.addEventListener('mouseup', () => {
+    isDown = false;
+    snapToClosest();
+  });
+
+  slider.addEventListener('mousemove', (e) => {
+    if (!isDown) return;
+    e.preventDefault();
+    const x = e.pageX - slider.offsetLeft;
+    const walk = (x - startX) * 1.2;
+    slider.scrollLeft = scrollLeft - walk;
+  });
+
+  /* TOUCH (MOBILE) */
+  slider.addEventListener('touchstart', (e) => {
+    startX = e.touches[0].pageX;
+    scrollLeft = slider.scrollLeft;
+  });
+
+  slider.addEventListener('touchend', snapToClosest);
+
+  function snapToClosest() {
+    let closestCard = null;
+    let closestDistance = Infinity;
+
+    cards.forEach(card => {
+      const cardLeft = card.offsetLeft;
+      const distance = Math.abs(slider.scrollLeft - cardLeft);
+      if (distance < closestDistance) {
+        closestDistance = distance;
+        closestCard = card;
+      }
+    });
+
+    if (closestCard) {
+      slider.scrollTo({
+        left: closestCard.offsetLeft,
+        behavior: 'smooth'
+      });
+    }
+  }
+})();
+  </script>
     
 </body>
 
