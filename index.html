@@ -342,6 +342,69 @@ img, video {
     content: "";
     flex: 0 0 20px;
 }     
+
+/* ===================== ECOSYSTEM 3D SWIPE ADD-ON ===================== */
+
+/* Container lebih halus saat geser */
+.ecosystem-slider {
+  scroll-behavior: smooth;
+  perspective: 1400px;
+  padding-bottom: 1.5rem;
+}
+
+/* Card default */
+.ecosystem-item {
+  transform-style: preserve-3d;
+  transition: 
+    transform 0.5s ease,
+    box-shadow 0.5s ease,
+    opacity 0.5s ease;
+  will-change: transform;
+}
+
+/* Card aktif (tengah layar) */
+.ecosystem-item:hover {
+  transform: rotateY(-15deg) rotateX(6deg) scale(1.08);
+  box-shadow: 0 25px 40px rgba(108,99,255,0.7);
+  z-index: 5;
+}
+
+/* Efek saat disentuh / drag di HP */
+.ecosystem-item:active {
+  transform: rotateY(15deg) rotateX(-6deg) scale(1.08);
+}
+
+/* Kesan depth saat geser */
+.ecosystem-slider::-webkit-scrollbar {
+  height: 6px;
+}
+
+/* Hilangkan seleksi biar drag terasa natural */
+.ecosystem-slider,
+.ecosystem-item {
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* Tambahan efek cinematic */
+.ecosystem-item::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  background: linear-gradient(
+    135deg,
+    rgba(255,255,255,0.12),
+    rgba(255,255,255,0)
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.ecosystem-item:hover::after {
+  opacity: 1;
+}
         
     </style>
 
