@@ -5,35 +5,26 @@
 <title>ZILA Profile</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-<script defer src="app.js"></script>
-<style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins}
-body{color:#fff;min-height:100vh;background:#000;overflow-x:hidden;text-align:center}
-#blackhole-bg{position:fixed;inset:0;z-index:-5;background:#000}
-.stars,.asteroids,.blackhole{position:absolute;inset:0}
-.blackhole{margin:auto;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle,#000 35%,#fff 45%,transparent 70%);box-shadow:0 0 200px #fff5;animation:spin 25s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-
-.card{max-width:500px;margin:100px auto;background:rgba(255,255,255,.06);padding:40px;border-radius:24px;box-shadow:0 0 60px rgba(0,255,213,.15);text-align:center}
-img.profile-img{width:120px;height:120px;border-radius:50%;object-fit:cover;margin-bottom:20px;cursor:pointer}
-input,button{width:100%;padding:12px;margin-top:12px;border-radius:8px;border:none}
-button{background:#00ffd5;font-weight:700;cursor:pointer}
-</style>
+<script src="app.js" defer></script>
 </head>
 <body>
-<div id="blackhole-bg">
- <div class="stars"></div>
- <div class="asteroids"></div>
- <div class="blackhole"></div>
-</div>
+<nav>
+  <strong>ZILA</strong>
+  <div>
+    <a href="index.html">Home</a>
+    <a href="task.html">Tasks</a>
+  </div>
+</nav>
 
-<div class="card">
-<img src="https://via.placeholder.com/120" class="profile-img" id="profilePic" onclick="uploadProfilePic()">
-<input type="text" id="username" placeholder="Username">
-<input type="text" id="wallet" placeholder="Wallet Address"><button onclick="saveWallet()">✅ Save</button>
-<p>Referral Code: <span id="refCode">ZILA1234</span></p>
-<p>Referral Link: <span id="refLink">https://zila.com/ref/ZILA1234</span></p>
-<button onclick="saveProfile()">Save Profile</button>
-</div>
+<section class="card">
+<h1>Profile</h1>
+<img id="profilePic" src="https://via.placeholder.com/120" style="border-radius:50%;width:120px;height:120px;cursor:pointer;" onclick="uploadProfilePic()">
+<input id="username" placeholder="Username">
+<button onclick="saveProfile()">Save</button>
+
+<h3>Wallet Address</h3>
+<input id="wallet" placeholder="Your Wallet Address">
+<button onclick="saveWallet()">Save ✅</button>
+</section>
 </body>
 </html>
