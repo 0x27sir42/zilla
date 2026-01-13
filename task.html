@@ -2,26 +2,32 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>ZILA Tasks</title>
+<title>ZILA Task</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-<script src="app.js" defer></script>
+<link rel="stylesheet" href="style.css">
+<script defer src="app.js"></script>
 </head>
 <body>
+<div id="blackhole-bg">
+ <div class="stars"></div>
+ <div class="asteroids"></div>
+ <div class="blackhole"></div>
+</div>
+
 <nav>
-  <strong>ZILA</strong>
-  <div>
-    <a href="index.html">Home</a>
-    <a href="presale.html">Presale</a>
-    <a href="staking.html">Staking</a>
-    <a href="task.html">Tasks</a>
-    <a href="leaderboard.html">Leaderboard</a>
-  </div>
+ <strong>ZILA</strong>
+ <div>
+  <a href="index.html">Home</a>
+  <a href="task.html">Task</a>
+ </div>
+ <button id="connect" class="wallet">Connect</button>
 </nav>
 
 <section class="card">
 <h1>Earn Points</h1>
-<div id="taskList"></div>
+<div id="taskList">
+<!-- JS will populate tasks with links -->
+</div>
 </section>
 </body>
 </html>
