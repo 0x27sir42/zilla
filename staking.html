@@ -7,93 +7,48 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/web3@1.10.0/dist/web3.min.js"></script>
 <script defer src="app.js"></script>
-<script defer src="app.user.js"></script>
-
-<style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins}
-body{color:#fff;background:#000;overflow-x:hidden}
-nav{display:flex;justify-content:space-between;align-items:center;padding:16px 32px;background:rgba(0,0,0,.6);backdrop-filter:blur(18px);position:sticky;top:0;z-index:999}
-nav a{color:#aaa;margin:0 14px;text-decoration:none;font-size:14px}
-nav a:hover{color:#00ffd5}
-.wallet{background:#00ffd5;color:#000;padding:8px 16px;border-radius:8px;border:none;cursor:pointer}
-.card{max-width:1100px;margin:120px auto;background:rgba(255,255,255,.06);padding:40px;border-radius:24px;box-shadow:0 0 60px rgba(0,255,213,.15);text-align:center}
-#blackhole-bg{position:fixed;inset:0;z-index:-5;background:#000}
-.stars,.asteroids,.blackhole{position:absolute;inset:0}
-.blackhole{margin:auto;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle,#000 35%,#fff 45%,transparent 70%);box-shadow:0 0 200px #fff5;animation:spin 25s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-input,select,button{width:100%;padding:12px;margin-top:12px;border-radius:8px;border:none}
-button{background:#00ffd5;color:#000;font-weight:600;cursor:pointer}
-.history a{display:block;color:#00ffd5;font-size:12px;margin-top:6px}
-.note{font-size:13px;color:#ffb347;margin-top:8px}
-</style>
 </head>
-
 <body>
-<div id="blackhole-bg">
- <div class="stars"></div>
- <div class="asteroids"></div>
- <div class="blackhole"></div>
-</div>
-
 <nav>
- <strong>ZILA</strong>
- <div>
-  <a href="index.html">Home</a>
-  <a href="presale.html">Presale</a>
-  <a href="staking.html">Staking</a>
-  <a href="roadmap.html">Roadmap</a>
-  <a href="tokenomics.html">Tokenomics</a>
-  <a href="whitepaper.html">Whitepaper</a>
-  <a href="#" id="loginBtn">Login/Register</a>
- </div>
- <button id="connect" class="wallet">Connect</button>
+  <strong>ZILA</strong>
+  <div>
+    <a href="index.html">Home</a>
+    <a href="presale.html">Presale</a>
+    <a href="staking.html">Staking</a>
+    <a href="task.html">Tasks</a>
+    <a href="leaderboard.html">Leaderboard</a>
+    <a href="zila-ai.html">ZILA-AI</a>
+    <a href="whitepaper.html">Whitepaper</a>
+    <a href="roadmap.html">Roadmap</a>
+    <a href="tokenomics.html">Tokenomics</a>
+  </div>
+  <button id="connect" class="wallet">Connect</button>
 </nav>
 
 <section class="card">
-<h2>Stake ZILA → Get ZILA</h2>
-<input id="stakeAmount" placeholder="Minimum 20,000 ZILA">
+<h2>🔒 Stake ZILA → Get ZILA</h2>
+<input id="stakeAmount" placeholder="Amount ZILA">
 <select id="stakePlan">
- <option value="0">Flexible (3%/yr)</option>
- <option value="1">6 Months (5%)</option>
- <option value="2">1 Year (15%)</option>
+ <option value="0">Flexible</option>
+ <option value="1">6 Months</option>
+ <option value="2">1 Year</option>
 </select>
 <button onclick="stake()">Stake ZILA</button>
 <button onclick="claim()">Claim Reward</button>
 <button onclick="unstake()">Unstake</button>
-<p class="note">⚠ Minimum staking: 20,000 ZILA</p>
 
-<h3>📜 Staking History</h3>
+<h3>📜 History</h3>
 <div id="stakingHistory" class="history"></div>
 </section>
 
 <section class="card">
-<h2>Lock POL → Get ZILA</h2>
-<p>Auto convert: 1 POL = 1600 ZILA</p>
+<h2>🔒 Lock POL → Get ZILA</h2>
+<p>Auto convert: <b>1 POL = 1600 ZILA</b></p>
 <input id="stakePol" placeholder="Minimum 50 POL">
 <button onclick="buyPresale()">Lock POL</button>
-<p class="note">⚠ Minimum staking: 50 POL</p>
 
 <h3>📜 History</h3>
 <div id="presaleHistory" class="history"></div>
 </section>
-
-<!-- LOGIN & USER MODAL (reuse index.html modal) -->
-<div id="authModal" class="modal">
- <div class="modal-content">
-   <h2>Login / Register</h2>
-   <select id="authType">
-     <option value="email">Email & Password</option>
-     <option value="wallet">Connect Wallet + Email</option>
-     <option value="google">Google</option>
-   </select>
-   <input type="text" id="username" placeholder="Username">
-   <input type="email" id="email" placeholder="Email">
-   <input type="password" id="password" placeholder="Password">
-   <input type="file" id="profileImage" accept="image/*">
-   <input type="text" id="xAccount" placeholder="Bind your X account">
-   <input type="text" id="telegramAccount" placeholder="Bind your Telegram account">
-   <button id="authSubmit">Submit</button>
- </div>
-</div>
 </body>
 </html>
