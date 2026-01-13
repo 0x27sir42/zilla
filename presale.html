@@ -1,653 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZILA Token - Presale</title>
-    <script src=""></script>
-    <link href="" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
-    <script src="https://cdn.tailwindcss.com"></script>
+<meta charset="UTF-8">
+<title>ZILA Presale</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <script src="https://unpkg.com/@walletconnect/web3-provider@2.11.0/dist/umd/index.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/web3@1.10.0/dist/web3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script defer src="app.js"></script>
 
-    <!-- WalletConnect v2 -->
-    <script src="https://unpkg.com/@walletconnect/web3-provider@2.11.0/dist/umd/index.min.js"></script>
-    
-    <!-- Konfigurasi Tailwind -->
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        zila: {
-                            primary: '#6C63FF',
-                            dark: '#0A0A0F',
-                        }
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'system-ui', 'sans-serif']
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        /* REUSED STYLES FROM DASHBOARD */
-        .token-circle {
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 4px solid #6C63FF;
-            box-shadow: 0 0 25px #6C63FF;
-            margin: 0 auto;
-        }
-
-        .section-bg {
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            min-height: 100vh;
-            position: relative;
-            padding: 8rem 1rem 4rem;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-        }
-
-        .section-overlay {
-            position: absolute;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.65);
-        }
-
-        .section-content {
-            position: relative;
-            z-index: 2;
-            color: white;
-            max-width: 1200px;
-            width: 100%;
-        }
-
-        .social-icon {
-            width: 48px;
-            height: 48px;
-            background: #000;
-            border-radius: 50%;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: 0.3s;
-        }
-
-        .social-icon:hover {
-            transform: scale(1.12);
-            box-shadow: 0 0 15px #6C63FF;
-            color: #6C63FF;
-        }
-
-        #loading-screen {
-            position: fixed;
-            inset: 0;
-            background: #000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            flex-direction: column;
-        }
-
-        #loading-screen img {
-            width: 180px;
-            height: 180px;
-            animation: pulse 1.5s infinite;
-            border-radius: 50%;
-        }
-
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
-                opacity: 0.8;
-            }
-
-            50% {
-                transform: scale(1.1);
-                opacity: 1;
-            }
-
-            100% {
-                transform: scale(1);
-                opacity: 0.8;
-            }
-        }
-
-        /* NEW PRESALE STYLES */
-        .presale-card {
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(12px);
-            border: 2px solid #6C63FF;
-            border-radius: 16px;
-            box-shadow: 0 0 30px rgba(108, 99, 255, 0.3);
-        }
-
-        .feature-card {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid #6C63FF/20;
-            border-radius: 12px;
-            transition: 0.3s;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 0 20px rgba(108, 99, 255, 0.4);
-            border-color: #6C63FF;
-        }
-
-        /* Tokenomics Image Style */
-        .tokenomics-image {
-            max-width: 500px;
-            border-radius: 50%; /* Make the image perfectly round */
-            border: 2px solid #6C63FF;
-            margin: 0 auto;
-            display: block; /* Ensure the image is centered */
-        }
-        
-        /* ===== GLOBAL FULL SCREEN FIX ===== */
-html, body {
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden;
-}
-
-/* Fix mobile viewport height bug */
-:root {
-    --vh: 1vh;
-}
-
-.section-bg {
-    width: 100vw;
-    min-height: calc(var(--vh, 1vh) * 100);
-    max-width: 100%;
-}
-
-/* Prevent horizontal scroll */
-* {
-    box-sizing: border-box;
-}
-        
-        /* ===== PERFECT CIRCLE IMAGE (ANTI TELUR) ===== */
-.circle-avatar {
-    width: 160px;
-    height: 160px;
-    aspect-ratio: 1 / 1;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 4px solid #6C63FF;
-    box-shadow: 0 0 20px rgba(108,99,255,0.7);
-}
-        
-        /* ===== LOADING SCREEN WITH BACKGROUND IMAGE ===== */
-#loading-screen {
-    background:
-        linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.85)),
-        url('file_00000000b3ac71faafad5ddb341c7cef.png') center/cover no-repeat;
-}
-    </style>
-    <script>
-        window.onload = function () {
-            setTimeout(() => {
-                document.getElementById("loading-screen").style.opacity = "0";
-                setTimeout(() => {
-                    document.getElementById("loading-screen").style.display = "none";
-                }, 400);
-            }, 1200);
-        }
-    </script>
-    <!-- Tambahkan WalletConnect script di head -->
-<script type="module">
-import WalletConnectProvider from "@walletconnect/web3-provider";
-
-window.WalletConnectProvider = WalletConnectProvider;
-</script>
+<style>
+*{font-family:Poppins;margin:0;padding:0;box-sizing:border-box}
+body{background:#000;color:#fff;overflow-x:hidden}
+nav{display:flex;justify-content:space-between;align-items:center;padding:16px 32px;background:rgba(0,0,0,.6);backdrop-filter:blur(18px);position:sticky;top:0;z-index:10}
+nav a{color:#aaa;margin:0 14px;text-decoration:none;font-size:14px}
+nav a:hover{color:#00ffd5}
+.wallet{background:#00ffd5;color:#000;padding:8px 16px;border-radius:8px;border:none}
+.card{max-width:1100px;margin:120px auto;padding:40px;background:rgba(255,255,255,.06);border-radius:24px;box-shadow:0 0 60px rgba(0,255,213,.15)}
+.banner{width:100%;height:220px;border-radius:20px;background:linear-gradient(to right,rgba(0,0,0,.6),rgba(0,0,0,.6)),url("https://images.unsplash.com/photo-1639762681485-074b7f938ba0");background-size:cover;background-position:center;display:flex;align-items:center;justify-content:center;margin-bottom:30px}
+.banner h1{font-size:32px;color:#00ffd5}
+input,button{width:100%;padding:14px;margin-top:12px;border-radius:10px;border:none}
+button{background:#00ffd5;font-weight:700;cursor:pointer}
+.note{font-size:13px;margin-top:8px}
+.info{display:flex;gap:20px;margin:20px 0;flex-wrap:wrap}
+.info div{flex:1;background:rgba(255,255,255,.05);padding:20px;border-radius:16px;text-align:center}
+canvas{background:rgba(255,255,255,.05);border-radius:16px;margin-top:20px}
+.history a{display:block;font-size:12px;margin-top:6px}
+.price-label{text-align:center;margin-top:10px;font-size:18px;font-weight:600;color:#fff}
+</style>
 </head>
 
-<body class="bg-black font-sans">
-    <!-- LOADING SCREEN (SAME AS DASHBOARD) -->
-    <div id="loading-screen">
-        <img src="file_0000000027b471fabe94ceb4e047ce59.png" alt="ZILA Loading" />
-        <p class="text-white mt-4 text-lg tracking-widest">Loading...</p>
-    </div>
-    <!-- NAVBAR (SIMPLIFIED FOR PRESALE FOCUS) -->
-    <nav class="fixed top-0 left-0 w-full bg-black/80 backdrop-blur-xl shadow-lg z-50 py-4">
-        <div class="max-w-7xl mx-auto px-4 flex justify-between items-center">
-            <a class="text-3xl font-bold text-white tracking-wider" href="#">ZILA <span
-                    class="text-zila-primary">PRESALE</span></a>
-            <!-- Mobile Button -->
-            <button class="md:hidden text-white text-3xl"
-                onclick="document.getElementById('mobileMenu').classList.toggle('hidden')">
-                ☰
-            </button>
-            <!-- Desktop Menu -->
-            <div class="hidden md:flex space-x-6 text-lg">
-                <a href="#presale" class="text-zila-primary font-bold">Presale</a>
-                <a href="#tokenomics" class="text-white hover:text-zila-primary">Tokenomics</a>
-                <a href="#features" class="text-white hover:text-zila-primary">Home</a>
-                <a href="" target="_blank" class="text-white hover:text-zila-primary">Contract</a>
-            </div>
-        </div>
-        <!-- MOBILE MENU -->
-        <div id="mobileMenu" class="hidden md:hidden bg-black/95 px-6 py-4 space-y-4 text-center">
-            <a class="block text-zila-primary font-bold" href="#presale">Presale</a>
-            <a class="block text-white" href="tokenomics.html">Tokenomics</a>
-            <a class="block text-white" href="index.html">Home</a>
-            <a class="block text-white" href="whitepaper.html" target="_blank">whitepaper</a>
-        </div>
-    </nav>
-    <!-- MAIN PRESALE SECTION (SAME BACKGROUND AS DASHBOARD HOME) -->
-    <section id="presale" class="section-bg" style="background-image:url('IMG_20251007_003718_238.jpg');">
-        <div class="section-overlay"></div>
-        <div class="section-content">
-            <div class="text-center mb-10">
-                <img src="file_0000000027b471fabe94ceb4e047ce59.png" alt="ZILA Token" class="token-circle mb-6">
-                <h1 class="text-5xl font-bold mb-3">ZILA TOKEN <span class="text-zila-primary">PRESALE</span></h1>
-                <p class="text-xl opacity-90 mb-6">Get Early Access to Next-Gen Dark AI & DeFi on Polygon</p>
-                <span id="countdown" class="inline-block bg-zila-primary/20 px-5 py-2 rounded-full border border-zila-primary mb-8">
-    Loading...
-                </span>
-            </div>
+<body>
+<nav>
+ <strong>ZILA</strong>
+ <div>
+  <a href="index.html">Home</a>
+  <a href="presale.html">Presale</a>
+  <a href="staking.html">Staking</a>
+ </div>
+ <button id="connect" class="wallet">Connect Wallet</button>
+</nav>
 
-            <!-- ===== TEAM PREVIEW (ADD-ON ONLY) ===== -->
-<div class="flex flex-wrap justify-center gap-8 mb-14">
-
-    <div class="text-center">
-        <img src="IMG_20260110_010723.jpg" class="circle-avatar mx-auto mb-3">
-        <h4 class="font-bold">CEO</h4>
-        <p class="text-sm opacity-70">Founder</p>
-    </div>
-
-    <div class="text-center">
-        <img src="cmo.jpg" class="circle-avatar mx-auto mb-3">
-        <h4 class="font-bold">CMO</h4>
-        <p class="text-sm opacity-70">Marketing</p>
-    </div>
-
-    <div class="text-center">
-        <img src="moderator.jpg" class="circle-avatar mx-auto mb-3">
-        <h4 class="font-bold">Moderator</h4>
-        <p class="text-sm opacity-70">Community</p>
-    </div>
-
-</div>
-            <!-- POLYGON LIVE PRICE CHART -->
-<div class="presale-card p-6 mb-12">
-    <h3 class="text-2xl font-bold text-center mb-4">
-        Polygon (MATIC) Live Price
-    </h3>
-
-    <div class="rounded-xl overflow-hidden border border-zila-primary">
-        <div class="tradingview-widget-container">
-            <div id="tradingview_matic"></div>
-        </div>
-    </div>
+<section class="card">
+<div class="banner">
+ <h1>ZILA PRIVATE PRESALE</h1>
 </div>
 
-<script src="https://s3.tradingview.com/tv.js"></script>
-<script>
-new TradingView.widget({
-    "container_id": "tradingview_pol",
-    "symbol": "BINANCE:POLUSDT",
-    "interval": "15",
-    "timezone": "Etc/UTC",
-    "theme": "dark",
-    "style": "1",
-    "locale": "en",
-    "toolbar_bg": "#000",
-    "enable_publishing": false,
-    "hide_top_toolbar": true,
-    "save_image": false,
-    "height": 420
-});
-</script>
-            <script>
-    // SET TANGGAL AKHIR PRESALE
-    const presaleEndDate = new Date("2026-05-31T23:59:59Z").getTime();
-
-    function updateCountdown() {
-        const now = new Date().getTime();
-        const distance = presaleEndDate - now;
-
-        if (distance < 0) {
-            document.getElementById("countdown").innerHTML = "Presale Ended";
-            clearInterval(countdownInterval);
-            return;
-        }
-
-        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-        document.getElementById("countdown").innerHTML =
-            `${days}d ${hours}h ${minutes}m ${seconds}s`;
-    }
-
-    const countdownInterval = setInterval(updateCountdown, 1000);
-    updateCountdown();
-            </script>
-            <!-- PRESALE DASHBOARD CARD -->
-            <div class="presale-card p-8 mb-12">
-                <div class="grid md:grid-cols-3 gap-6 mb-8">
-                    <div class="text-center">
-                        <h3 class="text-lg opacity-80 mb-2">Total Raised</h3>
-                        <p class="text-3xl font-bold text-zila-primary">3000 POL</p>
-                        <p class="text-sm opacity-70">of 300 POLYGON Goal</p>
-                        <div class="w-full h-2 bg-white/10 rounded-full mt-2">
-                            <div class="h-full bg-zila-primary rounded-full" style="width: 25%"></div>
-                        </div>
-                    </div>
-                    <div class="text-center">
-                        <h3 class="text-lg opacity-80 mb-2">Tokens Sold</h3>
-                        <p class="text-3xl font-bold text-zila-primary">50,160,000 ZILA</p>
-                        <p class="text-sm opacity-70">of 100,000,000 ZILA Allocated</p>
-                    </div>
-                    <div class="text-center">
-                        <h3 class="text-lg opacity-80 mb-2">intial listing Price ZILA</h3>
-                        <p class="text-3xl font-bold text-zila-primary">0.00618 POL</p>
-                        <p class="text-sm opacity-70">1 POL = 1600 ZILA</p>
-                    </div>
-                </div>
-                <!-- PURCHASE FORM -->
-                <div class="bg-black/50 p-6 rounded-lg border border-zila-primary/30">
-                    <h3 class="text-2xl font-bold mb-4 text-center">Buy ZILA Tokens</h3>
-
-<div class="flex flex-col md:flex-row gap-4 mb-6">
-    <div class="flex-1">
-        <label class="block text-sm opacity-80 mb-2">Enter MATIC Amount</label>
-        <input id="maticAmount"
-               type="number"
-               step="0.01"
-               min="0.1"
-               placeholder="0.00"
-               oninput="calculateZila()"
-               class="w-full bg-white/10 border border-zila-primary/40 rounded-lg px-4 py-3 text-white focus:outline-none">
-    </div>
-
-    <div class="flex-1">
-        <label class="block text-sm opacity-80 mb-2">ZILA Received</label>
-        <input id="zilaReceived"
-               type="text"
-               readonly
-               placeholder="0"
-               class="w-full bg-white/5 border border-zila-primary/20 rounded-lg px-4 py-3 text-white cursor-not-allowed">
-    </div>
+<div class="info">
+ <div><h3>💰 Price</h3><p>1 ZILA = 0.000625 POL</p></div>
+ <div><h3>🔁 Rate</h3><p>1 POL = 1600 ZILA</p></div>
+ <div><h3>🏦 Funds Raised</h3><p>15,000 POL</p></div>
 </div>
-                    <div class="text-center">
-                        <button onclick="connectWallet()"
-class="bg-zila-primary hover:bg-zila-primary/80 text-white px-8 py-3 rounded-full text-xl font-bold w-full md:w-auto">
-<i class="fa fa-wallet mr-2"></i> Connect Wallet
-</button>
 
-<button onclick="buyZila()"
-class="bg-zila-primary hover:bg-zila-primary/80 text-white px-8 py-3 rounded-full text-xl font-bold w-full md:w-auto transition shadow-lg">
-<i class="fa fa-wallet mr-2"></i> Connect Wallet & Buy
-</button>
+<h3>🛒 Buy ZILA</h3>
+<input id="buyPol" placeholder="Minimum 20 POL">
+<button id="buyBtn">Buy ZILA</button>
+<p class="note">⚠ Minimum purchase: 20 POL</p>
+<button id="claimBtn">Claim ZILA</button>
 
-<p id="walletAddress" class="text-sm mt-3 opacity-70 text-center"></p>
-                        <p class="text-sm opacity-70 mt-3">Supported Wallets: MetaMask, Trust Wallet, Coinbase Wallet</p>
-                    </div>
-                </div>
-            </div>
+<h3 style="margin-top:40px">📊 ZILA Private Market</h3>
+<canvas id="chart" height="120"></canvas>
+<div class="price-label" id="priceLabel"></div>
 
-            <!-- TOKENOMICS SECTION (SAME AS DASHBOARD) -->
-            <div id="tokenomics" class="mb-12">
-                <h2 class="text-4xl font-bold mb-6 text-center">TOKENOMICS</h2>
-                <img src="papazola.jpg" alt="Tokenomics Pie Chart" class="tokenomics-image mb-6">
-
-                <div class="grid md:grid-cols-4 gap-4 mt-8">
-                    <div class="feature-card p-4">
-                        <h3 class="text-xl text-zila-primary mb-2">Total Supply</h3>
-                        <p class="text-2xl font-bold">1,000,000,000</p>
-                    </div>
-                    <div class="feature-card p-4">
-                        <h3 class="text-xl text-zila-primary mb-2">Presale Allocation</h3>
-                        <p class="text-2xl font-bold">20%</p>
-                    </div>
-                    <div class="feature-card p-4">
-                        <h3 class="text-xl text-zila-primary mb-2">Liquidity (Locked)</h3>
-                        <p class="text-2xl font-bold">10%</p>
-                    </div>
-                    <div class="feature-card p-4">
-                        <h3 class="text-xl text-zila-primary mb-2">Team (Locked)</h3>
-                        <p class="text-2xl font-bold">5% (2Y)</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ZILA TOKEN FEATURES/ADVANTAGES -->
-            <div id="features">
-                <h2 class="text-4xl font-bold mb-6 text-center">Why Choose ZILA?</h2>
-                <div class="grid md:grid-cols-3 gap-6">
-                    <div class="feature-card p-6">
-                        <div
-                            class="w-12 h-12 bg-zila-primary/20 rounded-full flex items-center justify-center mb-4">
-                            <i class="fa fa-brain text-2xl text-zila-primary"></i>
-                        </div>
-                        <h3 class="text-2xl font-bold mb-2">Dark AI Integration</h3>
-                        <p class="opacity-80">Powered by advanced Dark AI for automated DeFi strategies, risk management, and
-                            smart contract optimization.</p>
-                    </div>
-                    <div class="feature-card p-6">
-                        <div
-                            class="w-12 h-12 bg-zila-primary/20 rounded-full flex items-center justify-center mb-4">
-                            <i class="fa fa-polygon text-2xl text-zila-primary"></i>
-                        </div>
-                        <h3 class="text-2xl font-bold mb-2">Polygon-Powered</h3>
-                        <p class="opacity-80">Low gas fees, fast transactions, and seamless integration with Polygon's DeFi
-                            ecosystem and dApps.</p>
-                    </div>
-                    <div class="feature-card p-6">
-                        <div
-                            class="w-12 h-12 bg-zila-primary/20 rounded-full flex items-center justify-center mb-4">
-                            <i class="fa fa-lock text-2xl text-zila-primary"></i>
-                        </div>
-                        <h3 class="text-2xl font-bold mb-2">Secure & Transparent</h3>
-                        <p class="opacity-80">Audited smart contract, locked liquidity, and transparent team vesting to ensure
-                            long-term trust.</p>
-                    </div>
-                    <div class="feature-card p-6">
-                        <div
-                            class="w-12 h-12 bg-zila-primary/20 rounded-full flex items-center justify-center mb-4">
-                            <i class="fa fa-trophy text-2xl text-zila-primary"></i>
-                        </div>
-                        <h3 class="text-2xl font-bold mb-2">High Staking Rewards</h3>
-                        <p class="opacity-80">40% token allocation for staking programs with competitive APY to reward
-                            long-term holders.</p>
-                    </div>
-                    <div class="feature-card p-6">
-                        <div
-                            class="w-12 h-12 bg-zila-primary/20 rounded-full flex items-center justify-center mb-4">
-                            <i class="fa fa-handshake-o text-2xl text-zila-primary"></i>
-                        </div>
-                        <h3 class="text-2xl font-bold mb-2">Strong Ecosystem</h3>
-                        <p class="opacity-80">20% token allocation for partnerships, dApp integrations, and ecosystem growth
-                            to drive adoption.</p>
-                    </div>
-                    <div class="feature-card p-6">
-                        <div
-                            class="w-12 h-12 bg-zila-primary/20 rounded-full flex items-center justify-center mb-4">
-                            <i class="fa fa-users text-2xl text-zila-primary"></i>
-                        </div>
-                        <h3 class="text-2xl font-bold mb-2">Community Driven</h3>
-                        <p class="opacity-80">Active community involvement in project governance and future development
-                            decisions.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <!-- PARTNERSHIP -->
-<section class="py-20 bg-black">
-    <h2 class="text-4xl font-bold text-center mb-10">Our Partnerships</h2>
-
-    <div class="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-5 gap-6 px-6">
-        <div class="feature-card p-6 flex items-center justify-center">
-            <img src="bitget.png" class="max-h-12">
-        </div>
-        <div class="feature-card p-6 flex items-center justify-center">
-            <img src="mexc.jpeg" class="max-h-12">
-        </div>
-        <div class="feature-card p-6 flex items-center justify-center">
-            <img src="kucoin.webp" class="max-h-12">
-        </div>
-        <div class="feature-card p-6 flex items-center justify-center">
-            <img src="IMG_20250914_051554_215.jpg" class="max-h-12">
-        </div>
-        <div class="feature-card p-6 flex items-center justify-center">
-            <img src="godzilaai.png" class="max-h-12">
-        </div>
-    </div>
+<h3 style="margin-top:40px">📜 Purchase History</h3>
+<div id="presaleHistory" class="history"></div>
 </section>
-    
-    <!-- FOOTER -->
-    <footer class="bg-zila-dark py-12 text-center">
-        <p class="text-white opacity-70">
-            &copy; 2024 ZILA Token. All rights reserved. |
-            <a href="#" class="text-zila-primary hover:underline">Terms of Service</a> |
-            <a href="#" class="text-zila-primary hover:underline">Privacy Policy</a>
-        </p>
-        <div class="flex justify-center mt-6">
-            <a href="#" class="social-icon mx-3"><i class="fa fa-twitter"></i></a>
-            <a href="#" class="social-icon mx-3"><i class="fa fa-telegram"></i></a>
-            <a href="#" class="social-icon mx-3"><i class="fa fa-discord"></i></a>
-        </div>
-    </footer>
-    
-    <script>
-let userAccount = null;
-const ZILA_RATE = 1800;
 
-// GANTI DENGAN CONTRACT KAMU
-const PRESALE_CONTRACT = "0x877E30577de32eAb6dad709c337494994d275e48";
+<script>
+let web3, account;
+const minBuy = 20; 
+let price = 0.000625;
+const ctx = document.getElementById("chart").getContext("2d");
+const prices = Array(25).fill(price);
+const labels = prices.map((_,i)=>i);
+const chart = new Chart(ctx,{type:"line",data:{labels:labels,datasets:[{data:prices,borderWidth:2,borderColor:"#00ffd5",tension:.4,pointRadius:0}]},options:{plugins:{legend:{display:false}},scales:{x:{display:false},y:{display:false}}}});
+function updatePrice(){price+=(Math.random()*0.00000015);prices.push(price);prices.shift();chart.update();document.getElementById("priceLabel").innerText="Current Price: "+price.toFixed(8)+" POL"}
+updatePrice(); setInterval(updatePrice,3000);
 
-// Polygon Mainnet
-const polygonParams = {
-    chainId: "0x89",
-    chainName: "Polygon Mainnet",
-    nativeCurrency: {
-        name: "MATIC",
-        symbol: "MATIC",
-        decimals: 18
-    },
-    rpcUrls: ["https://polygon-rpc.com/"],
-    blockExplorerUrls: ["https://polygonscan.com/"]
+document.getElementById("connect").onclick = async ()=>{
+ if(!window.ethereum) return alert("Install MetaMask");
+ const accounts = await ethereum.request({method:"eth_requestAccounts"});
+ account = accounts[0];
+ document.getElementById("connect").innerText = account.slice(0,6)+"..."+account.slice(-4);
+ navigator.clipboard.writeText(account);
+ alert("Wallet connected & copied: " + account);
 };
 
-// CONNECT WALLET
-async function connectWallet() {
-    if (!window.ethereum) {
-        alert("MetaMask not detected!");
-        return;
-    }
+document.getElementById("buyBtn").onclick = async ()=>{
+ const val = parseFloat(document.getElementById("buyPol").value);
+ if(val<minBuy) return alert("Minimum purchase is 20 POL");
+ alert("TX SENT (simulasi)"); // connect ke smart contract actual buyPresale
+};
 
-    try {
-        const accounts = await ethereum.request({ method: "eth_requestAccounts" });
-        userAccount = accounts[0];
-
-        await ethereum.request({
-            method: "wallet_switchEthereumChain",
-            params: [{ chainId: polygonParams.chainId }]
-        });
-
-        alert("Wallet Connected: " + userAccount.slice(0,6) + "...");
-    } catch (err) {
-        if (err.code === 4902) {
-            await ethereum.request({
-                method: "wallet_addEthereumChain",
-                params: [polygonParams]
-            });
-        } else {
-            console.error(err);
-        }
-    }
-}
-
-// BUY TOKEN
-async function buyZila() {
-    if (!userAccount) {
-        await connectWallet();
-    }
-
-    const maticAmount = document.getElementById("maticAmount").value;
-    if (!maticAmount || maticAmount <= 0) {
-        alert("Enter MATIC amount");
-        return;
-    }
-
-    const valueWei = (maticAmount * 1e18).toString(16);
-
-    try {
-        await ethereum.request({
-            method: "eth_sendTransaction",
-            params: [{
-                from: userAccount,
-                to: PRESALE_CONTRACT,
-                value: "0x" + valueWei
-            }]
-        });
-
-        alert("Transaction sent! 🎉");
-    } catch (err) {
-        console.error(err);
-        alert("Transaction failed");
-    }
-}
-
-// HITUNG ZILA REALTIME
-function calculateZila() {
-    const matic = document.getElementById("maticAmount").value;
-    const zilaField = document.getElementById("zilaReceived");
-
-    if (!matic || matic <= 0) {
-        zilaField.value = 0;
-        return;
-    }
-
-    zilaField.value = (matic * ZILA_RATE).toLocaleString();
-}
-        </script>
-
-    <script>
-const ZILA_RATE = 1800; // 1 MATIC = 1800 ZILA
-
-function calculateZila() {
-    const matic = document.getElementById("maticAmount").value;
-    const zilaField = document.getElementById("zilaReceived");
-
-    if (!matic || matic <= 0) {
-        zilaField.value = 0;
-        return;
-    }
-
-    const zila = matic * ZILA_RATE;
-    zilaField.value = zila.toLocaleString();
-}
-    </script>
-    <script>
-function setVhUnit() {
-    document.documentElement.style.setProperty(
-        '--vh',
-        window.innerHeight * 0.01 + 'px'
-    );
-}
-setVhUnit();
-window.addEventListener('resize', setVhUnit);
-    </script>
-    
+document.getElementById("claimBtn").onclick = async ()=>{
+ alert("Claim TX SENT (simulasi)");
+};
+</script>
 </body>
-
-                          </html>
+</html>
