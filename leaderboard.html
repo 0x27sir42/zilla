@@ -4,22 +4,30 @@
 <meta charset="UTF-8">
 <title>ZILA Leaderboard</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-<script src="app.js" defer></script>
+<link rel="stylesheet" href="style.css">
+<script defer src="app.js"></script>
 </head>
 <body>
+<div id="blackhole-bg">
+ <div class="stars"></div>
+ <div class="asteroids"></div>
+ <div class="blackhole"></div>
+</div>
+
 <nav>
-  <strong>ZILA</strong>
-  <div>
-    <a href="index.html">Home</a>
-    <a href="task.html">Tasks</a>
-    <a href="leaderboard.html">Leaderboard</a>
-  </div>
+ <strong>ZILA</strong>
+ <div>
+  <a href="index.html">Home</a>
+  <a href="leaderboard.html">Leaderboard</a>
+ </div>
+ <button id="connect" class="wallet">Connect</button>
 </nav>
 
 <section class="card">
-<h1>Top 100 Users</h1>
-<div id="leaderboardList"></div>
+<h1>Leaderboard</h1>
+<div id="leaderboardList">
+<!-- JS will populate top users -->
+</div>
 </section>
 </body>
 </html>
